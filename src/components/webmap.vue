@@ -10,9 +10,6 @@
   import {
     ClusterLayer
   } from 'maptalks.markercluster';
-  import markerCount from '../assets/points.js';
-  import county from '../assets/county.js';
-  import street from '../assets/street.js';
 
   //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
   //例如：import 《组件名称》 from '《组件路径》';
@@ -31,89 +28,93 @@
     //方法集合
     methods: {
       markInfo() {
-        let markers = []
-        const testpoint = markerCount.testpoint;
-        for (var i = 0; i < testpoint.length; i++) {
-          var a = testpoint[i];
-          markers.push(new maptalks.Marker([a[1], a[0]]));
-        }
-        let clusterLayer = new ClusterLayer('cluster', markers, {
-          'noClusterWithOneMarker': false,
-          'maxClusterZoom': 18,
-          //"count" is an internal variable: marker count in the cluster.
-          'symbol': {
-            'markerType': 'ellipse',
-            'markerFill': {
-              property: 'count',
-              type: 'interval',
-              stops: [
-                [0, 'rgb(135, 196, 240)'],
-                [9, '#1bbc9b'],
-                [99, 'rgb(216, 115, 149)']
-              ]
+        fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+          let markers = []
+          const testpoint = result.points;
+          for (var i = 0; i < testpoint.length; i++) {
+            var a = testpoint[i];
+            markers.push(new maptalks.Marker([a[1], a[0]]));
+          }
+          let clusterLayer = new ClusterLayer('cluster', markers, {
+            'noClusterWithOneMarker': false,
+            'maxClusterZoom': 18,
+            //"count" is an internal variable: marker count in the cluster.
+            'symbol': {
+              'markerType': 'ellipse',
+              'markerFill': {
+                property: 'count',
+                type: 'interval',
+                stops: [
+                  [0, 'rgb(135, 196, 240)'],
+                  [9, '#1bbc9b'],
+                  [99, 'rgb(216, 115, 149)']
+                ]
+              },
+              'markerFillOpacity': 0.7,
+              'markerLineOpacity': 1,
+              'markerLineWidth': 3,
+              'markerLineColor': '#fff',
+              'markerWidth': {
+                property: 'count',
+                type: 'interval',
+                stops: [
+                  [0, 40],
+                  [9, 60],
+                  [99, 80]
+                ]
+              },
+              'markerHeight': {
+                property: 'count',
+                type: 'interval',
+                stops: [
+                  [0, 40],
+                  [9, 60],
+                  [99, 80]
+                ]
+              }
             },
-            'markerFillOpacity': 0.7,
-            'markerLineOpacity': 1,
-            'markerLineWidth': 3,
-            'markerLineColor': '#fff',
-            'markerWidth': {
-              property: 'count',
-              type: 'interval',
-              stops: [
-                [0, 40],
-                [9, 60],
-                [99, 80]
-              ]
-            },
-            'markerHeight': {
-              property: 'count',
-              type: 'interval',
-              stops: [
-                [0, 40],
-                [9, 60],
-                [99, 80]
-              ]
-            }
-          },
-          'drawClusterText': true,
-          'geometryEvents': true,
-          'single': true
+            'drawClusterText': true,
+            'geometryEvents': true,
+            'single': true
+          });
+          Vue.mapInstance.addLayer(clusterLayer);
         });
-        Vue.mapInstance.addLayer(clusterLayer);
       },
       //加载区划信息
       polygon() {
-        const geometries = maptalks.GeoJSON.toGeometry(county);
-        const vectorLayer = Vue.mapInstance.getLayer('v').addGeometry(geometries);
-        //设置style
-        vectorLayer.setStyle([{
-            'filter': ['==', 'RISK', '低风险'],
-            'symbol': {
-              'polygonFill': 'rgb(0,255,0)',
-              'polygonOpacity': 0.5,
-              'lineColor': '#000',
-              'lineWidth': 2
+        fetch("http://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
+          const geometries = maptalks.GeoJSON.toGeometry(county);
+          const vectorLayer = Vue.mapInstance.getLayer('v').addGeometry(geometries);
+          //设置style
+          vectorLayer.setStyle([{
+              'filter': ['==', 'RISK', '低风险'],
+              'symbol': {
+                'polygonFill': 'rgb(0,255,0)',
+                'polygonOpacity': 0.5,
+                'lineColor': '#000',
+                'lineWidth': 2
+              }
+            },
+            {
+              'filter': ['==', 'RISK', '中风险'],
+              'symbol': {
+                'polygonFill': 'rgb(255,255,0)',
+                'polygonOpacity': 0.5,
+                'lineColor': '#000',
+                'lineWidth': 2
+              }
+            },
+            {
+              'filter': ['==', 'RISK', '高风险'],
+              'symbol': {
+                'polygonFill': 'rgb(255,0,0)',
+                'polygonOpacity': 0.5,
+                'lineColor': '#000',
+                'lineWidth': 2
+              }
             }
-          },
-          {
-            'filter': ['==', 'RISK', '中风险'],
-            'symbol': {
-              'polygonFill': 'rgb(255,255,0)',
-              'polygonOpacity': 0.5,
-              'lineColor': '#000',
-              'lineWidth': 2
-            }
-          },
-          {
-            'filter': ['==', 'RISK', '高风险'],
-            'symbol': {
-              'polygonFill': 'rgb(255,0,0)',
-              'polygonOpacity': 0.5,
-              'lineColor': '#000',
-              'lineWidth': 2
-            }
-          }
-        ]);
+          ]);
+        });
       }
     },
     //生命周期 - 创建完成（可以访问当前this实例）
