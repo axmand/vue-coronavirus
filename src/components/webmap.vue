@@ -11,7 +11,8 @@
     ClusterLayer
   } from 'maptalks.markercluster';
   import markerCount from '../assets/points.js';
-  import county from '../assets/polygon.js'
+  import county from '../assets/polygon.js';
+  import street from '../assets/street.js';
 
   //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
   //例如：import 《组件名称》 from '《组件路径》';
@@ -82,18 +83,21 @@
       },
       //加载区划信息
       polygon() {
-        const geometries = maptalks.GeoJSON.toGeometry(county.polygon);
+        const geometries = maptalks.GeoJSON.toGeometry(street);
         const vectorLayer = Vue.mapInstance.getLayer('v').addGeometry(geometries);
-        setTimeout(() => {
-          vectorLayer.forEach(function (feature) {
-              feature.updateSymbol([{
-                'polygonFill': '#747474',
-                'polygonOpacity': 0.5,
-                'lineColor': '#000',
-                'lineWidth': 2
-              }]);
-            });
-        }, 1000);
+        //设置style
+        vectorLayer.forEach(function (feature) {
+          feature.updateSymbol([{
+            'polygonFill' : 'rgb(135,196,240)',
+            'polygonOpacity' : 1,
+            'lineColor' : '#1bbc9b',
+            'lineWidth' : 6,
+            'lineJoin'  : 'round', //miter, round, bevel
+            'lineCap'   : 'round', //butt, round, square
+            'lineDasharray' : null,//dasharray, e.g. [10, 5, 5]
+            'lineOpacity ' : 1
+          }]);
+        });
       }
     },
     //生命周期 - 创建完成（可以访问当前this实例）
