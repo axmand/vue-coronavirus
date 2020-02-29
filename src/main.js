@@ -3,6 +3,8 @@ import Vue from 'vue';
 //组件载入
 import App from './App.vue';
 
+Vue.prototype.mapInstance = {};
+
 const app = new Vue({
     render:h=>h(App)
 }).$mount("#app");

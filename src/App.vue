@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <webmap ref="webmap"></webmap>
-        <button @click="display">聚点图</button>
+        <!-- <button @click="display">聚点图</button> -->
     </div>
 </template>
 
