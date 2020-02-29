@@ -11,7 +11,7 @@
     ClusterLayer
   } from 'maptalks.markercluster';
   import markerCount from '../assets/points.js';
-  import county from '../assets/polygon.js';
+  import county from '../assets/county.js';
   import street from '../assets/street.js';
 
   //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
@@ -83,21 +83,37 @@
       },
       //加载区划信息
       polygon() {
-        const geometries = maptalks.GeoJSON.toGeometry(street);
+        const geometries = maptalks.GeoJSON.toGeometry(county);
         const vectorLayer = Vue.mapInstance.getLayer('v').addGeometry(geometries);
         //设置style
-        vectorLayer.forEach(function (feature) {
-          feature.updateSymbol([{
-            'polygonFill' : 'rgb(135,196,240)',
-            'polygonOpacity' : 1,
-            'lineColor' : '#1bbc9b',
-            'lineWidth' : 6,
-            'lineJoin'  : 'round', //miter, round, bevel
-            'lineCap'   : 'round', //butt, round, square
-            'lineDasharray' : null,//dasharray, e.g. [10, 5, 5]
-            'lineOpacity ' : 1
-          }]);
-        });
+        vectorLayer.setStyle([{
+            'filter': ['==', 'RISK', '低风险'],
+            'symbol': {
+              'polygonFill': 'rgb(0,255,0)',
+              'polygonOpacity': 0.5,
+              'lineColor': '#000',
+              'lineWidth': 2
+            }
+          },
+          {
+            'filter': ['==', 'RISK', '中风险'],
+            'symbol': {
+              'polygonFill': 'rgb(255,255,0)',
+              'polygonOpacity': 0.5,
+              'lineColor': '#000',
+              'lineWidth': 2
+            }
+          },
+          {
+            'filter': ['==', 'RISK', '高风险'],
+            'symbol': {
+              'polygonFill': 'rgb(255,0,0)',
+              'polygonOpacity': 0.5,
+              'lineColor': '#000',
+              'lineWidth': 2
+            }
+          }
+        ]);
       }
     },
     //生命周期 - 创建完成（可以访问当前this实例）
@@ -108,15 +124,20 @@
       Vue.mapInstance = new maptalks.Map("WebMap", {
         center: [114.31, 30.31],
         zoom: 14,
-        baseLayer: new maptalks.TileLayer("base", {
-          urlTemplate: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          subdomains: ['a', 'b', 'c'],
-          attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
-        }),
+        spatialReference: {
+          projection: 'baidu'
+        },
         layers: [
           new maptalks.VectorLayer('v')
         ]
       });
+      const dpr = Vue.mapInstance.getDevicePixelRatio();
+      const scaler = dpr > 1 ? 2 : 1;
+      Vue.mapInstance.setBaseLayer(new maptalks.TileLayer("base", {
+        'urlTemplate': `http://online2.map.bdimg.com/tile/?qt=vtile&x={x}&y={y}&z={z}&styles=pl&scaler=${scaler}&udt=20190704`,
+        'subdomains': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
+      }));
       //marker
       this.markInfo();
       //
