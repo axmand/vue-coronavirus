@@ -4,7 +4,7 @@
   "description": "> A Vue.js-Based Project",
   "main": "index.js",
   "scripts": {
-    "dev": "vue-cli-service serve --open",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
