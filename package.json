@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
+    "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
     "maptalks": "^0.46.0",
     "maptalks.heatmap": "^0.6.1",
