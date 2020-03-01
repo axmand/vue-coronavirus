@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/axmand/vue-coronavirus#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "core-js": "^3.4.4",
+    "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
     "maptalks": "^0.46.0",
     "maptalks.markercluster": "^0.8.3",

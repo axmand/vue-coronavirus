@@ -1,16 +1,22 @@
 <template>
     <div id="app">
         <webmap ref="webmap"></webmap>
-        <button @click="display">聚点图</button>
+        <!-- <button @click="display">聚点图</button> -->
+        <!-- <el-divider></el-divider>
+        <echartsdisplay/> -->
     </div>
+
+
 </template>
 
 <script>
     import webmap from './components/webmap';
+    import echartsdisplay from './components/echartsdisplay';
     export default {
         name : 'app',
         components: {
-            webmap: webmap
+            webmap: webmap,
+            echartsdisplay: echartsdisplay
         },
         methods: {
             display() {
@@ -34,4 +40,7 @@
         height: 100%;
         width: 100%;
     }
+    /* .el-divider {
+        border-radius: 4px;
+    } */
 </style>
