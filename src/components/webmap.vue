@@ -180,13 +180,8 @@
 <style scoped>
   #WebMap {
     height: 100%;
-<<<<<<< HEAD
-    /*height: 500px;*/
-    /*position: absolute;*/
-=======
     position: absolute;
     /* position:relative; */
->>>>>>> d35a9e867d0be9d23ec9e7ad4bf283b021bf8585
     top: 0px;
     left: 0px;
     width: 100%;
