@@ -10,6 +10,9 @@
   import {
     ClusterLayer
   } from 'maptalks.markercluster';
+  import {
+    HeatLayer
+  } from 'maptalks.heatmap';
 
   //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
   //例如：import 《组件名称》 from '《组件路径》';
@@ -80,6 +83,21 @@
           Vue.mapInstance.addLayer(clusterLayer);
         });
       },
+      //加载企业复工热力图
+      heatMapInfo(){
+        fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+          const testpoint = result.points;
+          let data = testpoint.map(function (p) { 
+            return [p[1], p[0]];
+           });
+          let heatLayer = new HeatLayer('heat', data, {
+              'heatValueScale': 0.7,
+              'forceRenderOnRotating' : true,
+             'forceRenderOnMoving' : true
+          });
+          Vue.mapInstance.addLayer(heatLayer);
+        });
+      },
       //加载区划信息
       polygon() {
         fetch("http://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
@@ -141,6 +159,8 @@
       }));
       //marker
       this.markInfo();
+      //heatmap
+      this.heatMapInfo();
       //
       this.polygon();
 
@@ -160,7 +180,8 @@
 <style scoped>
   #WebMap {
     height: 100%;
-    position: absolute;
+    /*height: 500px;*/
+    /*position: absolute;*/
     top: 0px;
     left: 0px;
     width: 100%;

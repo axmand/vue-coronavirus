@@ -1,7 +1,8 @@
 <template>
     <div id="app">
         <webmap ref="webmap"></webmap>
-        <!-- <button @click="display">聚点图</button> -->
+        <!--<button @click="display_cluster">聚点图</button> 
+        <button @click='display_heatMap'>企业复工热力图</button>-->
     </div>
 </template>
 
@@ -13,12 +14,15 @@
             webmap: webmap
         },
         methods: {
-            display() {
+            display_cluster() {
                 console.log(this); 
                 console.log(this.$refs); 
                 // this.$refs.child1得到的子组件实例 
                 this.$refs.webmap.markInfo();
-            }
+            },
+            display_heatmap(){
+                this.$refs.webmap.heatMapInfo();
+            },
         },
         mounted() {
         }
