@@ -31,6 +31,7 @@
     watch: {},
     //方法集合
     methods: {
+      //聚点图
       markInfo(i) {
         if(i){
         fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
@@ -100,7 +101,7 @@
               let heatLayer = new HeatLayer('heat', data, {
                   'heatValueScale': 0.7,
                   'forceRenderOnRotating' : true,
-                'forceRenderOnMoving' : true
+                'forceRenderOnMoving' : false
               });
               Vue.mapInstance.addLayer(heatLayer);
             });
@@ -110,7 +111,7 @@
         }
 
       },
-      //加载区划信息
+      //加载区划信息风险等级图
       polygon(i) {
         if(i){
           fetch("http://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
@@ -123,8 +124,8 @@
                 'symbol': {
                   'polygonFill': 'rgb(0,255,0)',
                   'polygonOpacity': 0.5,
-                  'lineColor': '#000',
-                  'lineWidth': 2
+                  'lineColor': '#fff',
+                  'lineWidth': 0.3
                 }
               },
               {
@@ -132,8 +133,8 @@
                 'symbol': {
                   'polygonFill': 'rgb(255,255,0)',
                   'polygonOpacity': 0.5,
-                  'lineColor': '#000',
-                  'lineWidth': 2
+                  'lineColor': '#fff',
+                  'lineWidth': 0.3
                 }
               },
               {
@@ -141,11 +142,12 @@
                 'symbol': {
                   'polygonFill': 'rgb(255,0,0)',
                   'polygonOpacity': 0.5,
-                  'lineColor': '#000',
-                  'lineWidth': 2
+                  'lineColor': '#fff',
+                  'lineWidth': 0.3
                 }
               }
             ]);
+            Vue.mapInstance.getLayer('v').bringToBack()
           });
         }
         else{
@@ -154,42 +156,47 @@
       },
 
       //加载区县疫情确诊图
-      allPatient(){
-        fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
-          const features = result.features;
-          //var layer=Vue.mapInstance.getLayer('v');
-          var patientLayer= new maptalks.VectorLayer('vector');
-          for (var i = 0; i < features.length; i++) {
-            var a = features[i];
-            if(!a.properties.ALLPATIENT){
-              a.properties.ALLPATIENT='0';
-            }
-            //console.log(a.geometry.coordinates);
-            var marker = new maptalks.Marker(
-              a.geometry.coordinates,
-              {
-                 'properties' : {
-                 'name' :'行政区划：'+a.properties.NAME+'\n'+'确诊人数：'+a.properties.ALLPATIENT
-              },
-              symbol : [
-                 {
-                  'markerFile'   : imgURL,
-                  'markerWidth'  : 20,
-                  'markerHeight' : 30
-                },
+      allPatient(i){
+        if(i){
+          fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+            const features = result.features;
+            //var layer=Vue.mapInstance.getLayer('v');
+            var patientLayer= new maptalks.VectorLayer('patient');
+            for (var i = 0; i < features.length; i++) {
+              var a = features[i];
+              if(!a.properties.ALLPATIENT){
+                a.properties.ALLPATIENT='0';
+              }
+              //console.log(a.geometry.coordinates);
+              var marker = new maptalks.Marker(
+                a.geometry.coordinates,
                 {
-                  'textFaceName' : 'sans-serif',
-                  'textName' : '{name}',
-                  'textSize' : 14,
-                  'textDy'   : 24
-                }
-              ]
+                  'properties' : {
+                  'name' :'行政区划：'+a.properties.NAME+'\n'+'确诊人数：'+a.properties.ALLPATIENT
+                },
+                symbol : [
+                  {
+                    'markerFile'   : imgURL,
+                    'markerWidth'  : 20,
+                    'markerHeight' : 30
+                  },
+                  {
+                    'textFaceName' : 'sans-serif',
+                    'textName' : '{name}',
+                    'textSize' : 14,
+                    'textDy'   : 24
+                  }
+                ]
+              }
+            );
+            patientLayer.addGeometry(marker);
             }
-           );
-           patientLayer.addGeometry(marker);
-          }
-          Vue.mapInstance.addLayer(patientLayer);
-        });
+            Vue.mapInstance.addLayer(patientLayer);
+          });
+        }
+        else{
+          Vue.mapInstance.removeLayer("patient");
+        }
       },
       
       //加载区县疫情治愈图
@@ -263,7 +270,7 @@
       //确诊
       //this.allPatient();
       //治愈
-      this.allHeal();
+      // this.allHeal();
 
     },
 

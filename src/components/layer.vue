@@ -35,15 +35,16 @@
             this.visible = !this.visible;
         },
         check1(){
-                this.$parent.display_riskmap(this.checked1)
+            this.$parent.display_riskmap(this.checked1)
         },
         check2(){
-                this.$parent.display_heatmap(this.checked2)
+            this.$parent.display_heatmap(this.checked2)
         },
         check3(){
-                this.$parent.display_cluster(this.checked3)
+            this.$parent.display_cluster(this.checked3)
         },
         check4(){
+            this.$parent.display_patient(this.checked4)
         }
     },
     mounted () {
