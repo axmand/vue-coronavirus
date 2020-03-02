@@ -256,7 +256,28 @@
               Vue.mapInstance.getLayer('heal').hide()
         }
       },
+      //加载行政区划
+      boundary(){
+        if(Vue.mapInstance.getLayer('boundary') != null){
+          Vue.mapInstance.getLayer('boundary').show() 
+        }
+        else{
+          fetch("http://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
+              Vue.mapInstance.addLayer(new maptalks.VectorLayer('boundary'))
+              const geometries = maptalks.GeoJSON.toGeometry(county);
+              const vectorLayer = Vue.mapInstance.getLayer('boundary').addGeometry(geometries);
+              //设置style
+              vectorLayer.setStyle([{
+                  'symbol': {
+                    'lineColor': '#000',
+                    'lineWidth': 0.8
+                  }
+                }]);
+              Vue.mapInstance.getLayer('boundary').bringToBack()
+          });
+        }
 
+      },
       //加载影像底图
       hybird_map(){
           Vue.mapInstance.removeLayer("base");
@@ -267,6 +288,7 @@
             'subdomains': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
           }));
+          // this.$options.methods.boundary();
       },
 
       //加载矢量地图e
@@ -305,6 +327,7 @@
         'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
       }));
       this.polygon(true);
+      this.boundary();
 
     },
 
