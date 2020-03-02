@@ -5,8 +5,8 @@
         placement="left-start"
         v-model="visible">
         <div id="div1">
-            <img src="../dist/screenage.png" height="80em" width="auto" style= "border-right : 1%">
-            <img src="../dist/vector.png" height="80em" width="auto">
+            <img src="../assets/screenage.png" height="80em" width="auto" style= "border-right : 1%">
+            <img src="../assets/vector.png" height="80em" width="auto">
         </div >
         <el-button slot="reference" @click="clickbutton" icon="el-icon-document-copy" style="font-size: 1.5em"></el-button>
     </el-popover>
