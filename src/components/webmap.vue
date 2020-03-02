@@ -145,20 +145,14 @@
                   'lineWidth': 2
                 }
               }
-<<<<<<< HEAD
             ]);
           });
         }
         else{
           Vue.mapInstance.removeLayer("v");
         }
-
-      }
-=======
-            }
-          ]);
-        });
       },
+
       //加载区县疫情确诊图
       allPatient(){
         fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
@@ -197,6 +191,7 @@
           Vue.mapInstance.addLayer(patientLayer);
         });
       },
+      
       //加载区县疫情治愈图
       allHeal(){
         fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
@@ -234,7 +229,6 @@
           Vue.mapInstance.addLayer(healLayer);
         });
       },
->>>>>>> e5de6fb0e50b21b8a87f3d6fb0fc1fd9a93c9cd3
     },
     //生命周期 - 创建完成（可以访问当前this实例）
     created() {},
@@ -259,23 +253,17 @@
         'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
       }));
       //marker
-<<<<<<< HEAD
       // this.markInfo();
       //heatmap
       // this.heatMapInfo();
       //风险图
       // this.polygon();
-=======
-      //this.markInfo();
-      //heatmap
-      //this.heatMapInfo();
       //区划信息
-      this.polygon();
+      // this.polygon();
       //确诊
       //this.allPatient();
       //治愈
       this.allHeal();
->>>>>>> e5de6fb0e50b21b8a87f3d6fb0fc1fd9a93c9cd3
 
     },
 
