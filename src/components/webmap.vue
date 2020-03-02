@@ -1,6 +1,6 @@
 <!-- 主要界面地图模版 -->
 <template>
-  <div id="WebMap"></div>
+  <div id="WebMap"> </div>
 </template>
 
 <script>
@@ -14,6 +14,7 @@
     HeatLayer
   } from 'maptalks.heatmap';
 
+  import imgURL from '../dist/marker1.png';
   //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
   //例如：import 《组件名称》 from '《组件路径》';
   export default {
@@ -144,6 +145,7 @@
                   'lineWidth': 2
                 }
               }
+<<<<<<< HEAD
             ]);
           });
         }
@@ -152,6 +154,87 @@
         }
 
       }
+=======
+            }
+          ]);
+        });
+      },
+      //加载区县疫情确诊图
+      allPatient(){
+        fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+          const features = result.features;
+          //var layer=Vue.mapInstance.getLayer('v');
+          var patientLayer= new maptalks.VectorLayer('vector');
+          for (var i = 0; i < features.length; i++) {
+            var a = features[i];
+            if(!a.properties.ALLPATIENT){
+              a.properties.ALLPATIENT='0';
+            }
+            //console.log(a.geometry.coordinates);
+            var marker = new maptalks.Marker(
+              a.geometry.coordinates,
+              {
+                 'properties' : {
+                 'name' :'行政区划：'+a.properties.NAME+'\n'+'确诊人数：'+a.properties.ALLPATIENT
+              },
+              symbol : [
+                 {
+                  'markerFile'   : imgURL,
+                  'markerWidth'  : 20,
+                  'markerHeight' : 30
+                },
+                {
+                  'textFaceName' : 'sans-serif',
+                  'textName' : '{name}',
+                  'textSize' : 14,
+                  'textDy'   : 24
+                }
+              ]
+            }
+           );
+           patientLayer.addGeometry(marker);
+          }
+          Vue.mapInstance.addLayer(patientLayer);
+        });
+      },
+      //加载区县疫情治愈图
+      allHeal(){
+        fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+          const features = result.features;
+          var healLayer= new maptalks.VectorLayer('vector');
+          for (var i = 0; i < features.length; i++) {
+            var a = features[i];
+            if(!a.properties.ALLREHEAL){
+              a.properties.ALLREHEAL='0';
+            }
+            //console.log(a.geometry.coordinates);
+            var marker = new maptalks.Marker(
+              a.geometry.coordinates,
+              {
+                 'properties' : {
+                 'name' :'行政区划：'+a.properties.NAME+'\n'+'治愈人数：'+a.properties.ALLREHEAL
+              },
+              symbol : [
+                 {
+                  'markerFile'   : imgURL,
+                  'markerWidth'  : 20,
+                  'markerHeight' : 30
+                },
+                {
+                  'textFaceName' : 'sans-serif',
+                  'textName' : '{name}',
+                  'textSize' : 14,
+                  'textDy'   : 24
+                }
+              ]
+            }
+           );
+           healLayer.addGeometry(marker);
+          }
+          Vue.mapInstance.addLayer(healLayer);
+        });
+      },
+>>>>>>> e5de6fb0e50b21b8a87f3d6fb0fc1fd9a93c9cd3
     },
     //生命周期 - 创建完成（可以访问当前this实例）
     created() {},
@@ -176,11 +259,23 @@
         'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
       }));
       //marker
+<<<<<<< HEAD
       // this.markInfo();
       //heatmap
       // this.heatMapInfo();
       //风险图
       // this.polygon();
+=======
+      //this.markInfo();
+      //heatmap
+      //this.heatMapInfo();
+      //区划信息
+      this.polygon();
+      //确诊
+      //this.allPatient();
+      //治愈
+      this.allHeal();
+>>>>>>> e5de6fb0e50b21b8a87f3d6fb0fc1fd9a93c9cd3
 
     },
 

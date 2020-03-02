@@ -31,6 +31,9 @@
             display_riskmap(i){
                 this.$refs.webmap.polygon(i);
             },
+            display_patient(){
+                this.$refs.webmap.allPatient();
+            },
         },
         mounted() {
         }
