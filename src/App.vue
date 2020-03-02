@@ -1,36 +1,35 @@
 <template>
     <div id="app">
-        <!-- <span id='title'>湖北省新冠病毒疫情</span> -->
         <img id='img' src ="./dist/Banner.png" width="100%">
         <img id='legend' src ="./dist/legend01.png">
-        <p id="title">湖北省新冠病毒疫情</p>
+        <p id="title">湖北省疫情综合风险分析系统</p>
+        <statistic></statistic>
         <webmap ref="webmap"></webmap>
-        <!--<button @click="display_cluster">聚点图</button> 
-        <button @click='display_heatMap'>企业复工热力图</button>-->
+        <layer></layer>
     </div>
-
-
 </template>
 
 <script>
-
+    import statistic from './components/statistic';
     import webmap from './components/webmap';
-    import echartsdisplay from './components/echartsdisplay';
+    import layer from './components/layer';
     export default {
         name : 'app',
         components: {
             webmap: webmap,
-            echartsdisplay: echartsdisplay
+            statistic:statistic,
+            layer:layer
         },
         methods: {
-            display_cluster() {
-                console.log(this); 
-                console.log(this.$refs); 
+            display_cluster(i) {
                 // this.$refs.child1得到的子组件实例 
-                this.$refs.webmap.markInfo();
+                this.$refs.webmap.markInfo(i);
             },
-            display_heatmap(){
-                this.$refs.webmap.heatMapInfo();
+            display_heatmap(i){
+                this.$refs.webmap.heatMapInfo(i);
+            },
+            display_riskmap(i){
+                this.$refs.webmap.polygon(i);
             },
         },
         mounted() {
@@ -54,7 +53,7 @@
         width: 40%;
         z-index:2;
         left: 3%;
-        bottom: 15%;
+        bottom: 20%;
     }
     #img {
         position: fixed;
