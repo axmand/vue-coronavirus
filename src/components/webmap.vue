@@ -32,8 +32,7 @@
     //方法集合
     methods: {
       //聚点图
-      markInfo(i) {
-        if (i) {
+      markInfo() {
           fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
             let markers = []
             const testpoint = result.points;
@@ -85,13 +84,9 @@
             });
             Vue.mapInstance.addLayer(clusterLayer);
           });
-        } else {
-          Vue.mapInstance.removeLayer("cluster");
-        }
       },
       //加载企业复工热力图
-      heatMapInfo(i){
-        if(i){
+      heatMapInfo(){
             fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
               const testpoint = result.points;
               let data = testpoint.map(function (p) { 
@@ -104,57 +99,59 @@
               });
               Vue.mapInstance.addLayer(heatLayer);
             });
-        } else {
-          Vue.mapInstance.removeLayer("heat");
-        }
-
       },
       //加载区划信息风险等级图
       polygon(i) {
-        if (i) {
-          fetch("http://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
-            Vue.mapInstance.addLayer(new maptalks.VectorLayer('v'))
-            const geometries = maptalks.GeoJSON.toGeometry(county);
-            const vectorLayer = Vue.mapInstance.getLayer('v').addGeometry(geometries);
-            //设置style
-            vectorLayer.setStyle([{
-                'filter': ['==', 'RISK', '低风险'],
-                'symbol': {
-                  'polygonFill': 'rgb(0,255,0)',
-                  'polygonOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
+        if(i){
+          if(Vue.mapInstance.getLayer('v') != null){
+              Vue.mapInstance.getLayer('v').show()   
+              console.log(111)
+          }
+          else{
+            fetch("http://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
+              Vue.mapInstance.addLayer(new maptalks.VectorLayer('v'))
+              const geometries = maptalks.GeoJSON.toGeometry(county);
+              const vectorLayer = Vue.mapInstance.getLayer('v').addGeometry(geometries);
+              //设置style
+              vectorLayer.setStyle([{
+                  'filter': ['==', 'RISK', '低风险'],
+                  'symbol': {
+                    'polygonFill': 'rgb(0,255,0)',
+                    'polygonOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  }
+                },
+                {
+                  'filter': ['==', 'RISK', '中风险'],
+                  'symbol': {
+                    'polygonFill': 'rgb(255,255,0)',
+                    'polygonOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  }
+                },
+                {
+                  'filter': ['==', 'RISK', '高风险'],
+                  'symbol': {
+                    'polygonFill': 'rgb(255,0,0)',
+                    'polygonOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  }
                 }
-              },
-              {
-                'filter': ['==', 'RISK', '中风险'],
-                'symbol': {
-                  'polygonFill': 'rgb(255,255,0)',
-                  'polygonOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                }
-              },
-              {
-                'filter': ['==', 'RISK', '高风险'],
-                'symbol': {
-                  'polygonFill': 'rgb(255,0,0)',
-                  'polygonOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                }
-              }
-            ]);
-            Vue.mapInstance.getLayer('v').bringToBack()
-          });
-        } else {
-          Vue.mapInstance.removeLayer("v");
+              ]);
+              Vue.mapInstance.getLayer('v').bringToBack()
+            });
+          }
+        }
+        else{
+            Vue.mapInstance.getLayer('v').hide()
         }
       },
 
       //加载区县疫情确诊图
-      allPatient(i){
-        if(i){
+      allPatient(){
           fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
             const features = result.features;
             //var layer=Vue.mapInstance.getLayer('v');
@@ -190,10 +187,6 @@
             }
             Vue.mapInstance.addLayer(patientLayer);
           });
-        }
-        else{
-          Vue.mapInstance.removeLayer("patient");
-        }
       },
 
       //加载区县疫情治愈图
@@ -279,9 +272,11 @@
         'subdomains': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
       }));
+      this.polygon(true);
+      console.log(111)
     },
 
-    beforeCreate() {}, //生命周期 - 创建之前
+    beforeCreate() {}, //生命周期 - 创建之前rk
     beforeMount() {}, //生命周期 - 挂载之前
     beforeUpdate() {}, //生命周期 - 更新之前
     updated() {}, //生命周期 - 更新之后

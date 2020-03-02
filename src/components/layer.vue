@@ -23,7 +23,7 @@
     data() {
         return {
             visible: false,
-            checked1: false,
+            checked1: true,
             checked2: false,
             checked3: false,
             checked4: false,
