@@ -3,7 +3,7 @@
         <el-row id="row1">
             <el-col :span='3'>
                 <ul type="none">
-                <li id="num">66907</li>
+                <li id="num" style="color:red">66907</li>
                 <li id='type'>确诊</li>
                 </ul>  
             </el-col>
@@ -15,7 +15,7 @@
             </el-col>
             <el-col :span='3'>
                 <ul type="none">
-                <li id="num">31500</li>
+                <li id="num" style="color:green">31500</li>
                 <li id='type'>治愈</li>
                 </ul>  
             </el-col>
@@ -56,7 +56,8 @@ export default {
     width: 100%;
     display:table;
     text-align: center;
-    padding-bottom: 2%
+    padding-bottom: 2%;
+    font-size: 0.6em
   }
   .ul{
       display:table;
@@ -70,12 +71,12 @@ export default {
   }
   #num{
       font: bolder;
-      font-size: 1em;
+      font-size: 1.4em;
       text-align:center
   }
   #type{
-      font: bolder;
-      font-size: 0.8em;
+      font-weight: bolder;
+      font-size: 0.9em;
       text-align:center
   }
   #explain{

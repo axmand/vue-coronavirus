@@ -5,7 +5,7 @@
         placement="left-start"
         v-model="visible">
         <div id="div1">
-            <img src="../dist/screenage.png" height="80em" width="auto">
+            <img src="../dist/screenage.png" height="80em" width="auto" style= "border-right : 1%">
             <img src="../dist/vector.png" height="80em" width="auto">
         </div >
         <el-button slot="reference" @click="clickbutton" icon="el-icon-document-copy" style="font-size: 1.5em"></el-button>
@@ -46,6 +46,7 @@
     z-index:2;
     right: 2%;
     bottom: 3%;
+    
   }
   #div1 {
     margin: 0%;
@@ -53,6 +54,7 @@
   }
   .el-popover{
       /* width: 150em; */
-      margin-right: 0%
+      margin-right: 0%;
+      background: cornflowerblue;
   }
 </style>
