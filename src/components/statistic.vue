@@ -70,16 +70,16 @@ export default {
   }
   #num{
       font: bolder;
-      font-size: 25px;
+      font-size: 1em;
       text-align:center
   }
   #type{
       font: bolder;
-      font-size: 15px;
+      font-size: 0.8em;
       text-align:center
   }
   #explain{
       font: bolder;
-      font-size: 10px
+      font-size: 0.2em
   }
 </style>

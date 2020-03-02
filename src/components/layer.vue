@@ -5,20 +5,19 @@
         placement="left-start"
         v-model="visible">
         <div id="div1">
-            <el-checkbox v-model="checked1"  @change="check1" label="区县三级风险图" border size="medium"></el-checkbox>
-            <el-checkbox v-model="checked2" @change="check2" label="江夏疫情热力图" border size="medium"></el-checkbox>
+            <el-checkbox v-model="checked1"  @change="check1" label="区县风险图" border size="medium"></el-checkbox>
+            <el-checkbox v-model="checked2" @change="check2" label="疫情热力图" border size="medium"></el-checkbox>
         </div >
         <div id ="div2" >
             <el-checkbox v-model="checked3" @change="check3" label="疫情聚合图" border size="medium"></el-checkbox>
-            <el-checkbox v-model="checked4" @change="check4" label="区县确诊统计图" border size="medium"></el-checkbox>
+            <el-checkbox v-model="checked4" @change="check4" label="确诊统计图" border size="medium"></el-checkbox>
         </div>
-        <el-button slot="reference" @click="clickbutton" icon="el-icon-s-fold" style="font-size: 25px"></el-button>
+        <el-button slot="reference" @click="clickbutton" icon="el-icon-s-fold" style="font-size: 1.5em"></el-button>
     </el-popover>
     </div>
 </template>
 
 <script>
-    import webmap from './webmap';
     export default {
     name: 'layer',
     data() {
@@ -63,7 +62,7 @@
   .el-button{
     position: fixed;
     padding: 1%;
-    size : 10px;
+    size : 1.5em;
     z-index:2;
     right: 2%;
     bottom: 10%;
@@ -71,21 +70,19 @@
   .el-checkbox{
       width: 44%;
       margin-right: 4%;
-      font-size: 4px
+      font-size: 0.8em
   }
   #div1 {
     margin: 0%;
     padding: 0;
-    width: 30;
   }
   #div2 {
-    margin: 0%;
     padding: 0;
-    width: 30;
-    margin-top: 10px;
+    margin-top: 0.8em;
   }
   .el-popover{
-      width: 150px;
-      margin: 0%
+      /* width: 0.8em; */
+      margin-right: 0%;
+      padding-right: 0%;
   }
 </style>

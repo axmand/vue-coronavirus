@@ -6,6 +6,7 @@
         <statistic></statistic>
         <webmap ref="webmap"></webmap>
         <layer></layer>
+        <mapChoose></mapChoose>
     </div>
 </template>
 
@@ -13,12 +14,14 @@
     import statistic from './components/statistic';
     import webmap from './components/webmap';
     import layer from './components/layer';
+    import mapChoose from './components/mapChoose';
     export default {
         name : 'app',
         components: {
             webmap: webmap,
             statistic:statistic,
-            layer:layer
+            layer:layer,
+            mapChoose:mapChoose
         },
         methods: {
             display_cluster(i) {
@@ -52,14 +55,16 @@
     }
     #legend {
         position: fixed;
-        height: 15%;
-        width: 40%;
+        height: 6em;
+        width: auto;
         z-index:2;
         left: 3%;
         bottom: 20%;
     }
     #img {
         position: fixed;
+        width: 100%;
+        height: auto;
         z-index:2
     }
     #title {
@@ -69,7 +74,7 @@
         margin: 0;
         padding: 0;
         color: #fff;
-        font: 25px'微软雅黑';
+        font: 1.2em'微软雅黑';
         z-index:3
     }
     /* .el-divider {

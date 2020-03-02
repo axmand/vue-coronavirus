@@ -100,7 +100,7 @@
               let heatLayer = new HeatLayer('heat', data, {
                   'heatValueScale': 0.7,
                   'forceRenderOnRotating' : true,
-                'forceRenderOnMoving' : false
+                  'forceRenderOnMoving' : false
               });
               Vue.mapInstance.addLayer(heatLayer);
             });
