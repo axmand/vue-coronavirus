@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <img id='img' src ="./dist/Banner.png" width="100%">
-        <img id='legend' src ="./dist/legend01.png">
+        <img id='img' src ="./assets/Banner.png" width="100%">
+        <img id='legend' src ="./assets/legend01.png">
         <p id="title">湖北省疫情综合风险分析系统</p>
         <statistic></statistic>
         <webmap ref="webmap"></webmap>
