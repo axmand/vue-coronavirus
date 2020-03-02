@@ -32,6 +32,9 @@
             display_heatmap(){
                 this.$refs.webmap.heatMapInfo();
             },
+            display_patient(){
+                this.$refs.webmap.allPatient();
+            },
         },
         mounted() {
         }
