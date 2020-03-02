@@ -231,6 +231,30 @@
           Vue.mapInstance.addLayer(healLayer);
         });
       },
+
+      //加载影像底图
+      hybird_map(){
+          Vue.mapInstance.removeLayer("base");
+          const dpr = Vue.mapInstance.getDevicePixelRatio();
+          const scaler = dpr > 1 ? 2 : 1;
+          Vue.mapInstance.setBaseLayer(new maptalks.TileLayer("base", {
+            'urlTemplate': `https://maponline0.bdimg.com/starpic/?qt=satepc&u=x={x};y={y};z={z};v=009;type=sate&fm=46&app=webearth2&v=009&udt=20200225`,
+            'subdomains': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
+          }));
+      },
+
+      //加载矢量地图e
+      Vector_map(){
+          Vue.mapInstance.removeLayer("base");
+          const dpr = Vue.mapInstance.getDevicePixelRatio();
+          const scaler = dpr > 1 ? 2 : 1;
+          Vue.mapInstance.setBaseLayer(new maptalks.TileLayer("base", {
+            'urlTemplate': `http://online2.map.bdimg.com/tile/?qt=vtile&x={x}&y={y}&z={z}&styles=pl&scaler=${scaler}&udt=20190704`,
+            'subdomains': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
+          }));
+      },
     },
     //生命周期 - 创建完成（可以访问当前this实例）
     created() {},
@@ -255,19 +279,6 @@
         'subdomains': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
       }));
-      //marker
-      // this.markInfo();
-      //heatmap
-      // this.heatMapInfo();
-      //风险图
-      // this.polygon();
-      //区划信息
-      // this.polygon();
-      //确诊
-      //this.allPatient();
-      //治愈
-      // this.allHeal();
-
     },
 
     beforeCreate() {}, //生命周期 - 创建之前

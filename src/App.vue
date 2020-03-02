@@ -37,6 +37,12 @@
             display_patient(i){
                 this.$refs.webmap.allPatient(i);
             },
+            hybird_map(){
+                this.$refs.webmap.hybird_map();
+            },
+            Vector_map(){
+                this.$refs.webmap.Vector_map();
+            },
         },
         mounted() {
         }
