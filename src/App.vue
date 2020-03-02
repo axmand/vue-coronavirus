@@ -28,14 +28,14 @@
                 // this.$refs.child1得到的子组件实例 
                 this.$refs.webmap.markInfo(i);
             },
-            display_heatmap(){
-                this.$refs.webmap.heatMapInfo();
+            display_heatmap(i){
+                this.$refs.webmap.heatMapInfo(i);
             },
             display_riskmap(i){
                 this.$refs.webmap.polygon(i);
             },
-            display_patient(){
-                this.$refs.webmap.allPatient();
+            display_patient(i){
+                this.$refs.webmap.allPatient(i);
             },
             hybird_map(){
                 this.$refs.webmap.hybird_map();

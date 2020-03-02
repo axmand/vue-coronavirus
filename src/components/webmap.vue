@@ -32,61 +32,75 @@
     //方法集合
     methods: {
       //聚点图
-      markInfo() {
-          fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
-            let markers = []
-            const testpoint = result.points;
-            for (var i = 0; i < testpoint.length; i++) {
-              var a = testpoint[i];
-              markers.push(new maptalks.Marker([a[1], a[0]]));
-            }
-            let clusterLayer = new ClusterLayer('cluster', markers, {
-              'noClusterWithOneMarker': false,
-              'maxClusterZoom': 18,
-              //"count" is an internal variable: marker count in the cluster.
-              'symbol': {
-                'markerType': 'ellipse',
-                'markerFill': {
-                  property: 'count',
-                  type: 'interval',
-                  stops: [
-                    [0, 'rgb(135, 196, 240)'],
-                    [9, '#1bbc9b'],
-                    [99, 'rgb(216, 115, 149)']
-                  ]
+      markInfo(i) {
+        if(i){
+          if(Vue.mapInstance.getLayer('cluster') != null){
+              Vue.mapInstance.getLayer('cluster').show()   
+          }
+          else{
+            fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+              let markers = []
+              const testpoint = result.points;
+              for (var i = 0; i < testpoint.length; i++) {
+                var a = testpoint[i];
+                markers.push(new maptalks.Marker([a[1], a[0]]));
+              }
+              let clusterLayer = new ClusterLayer('cluster', markers, {
+                'noClusterWithOneMarker': false,
+                'maxClusterZoom': 18,
+                //"count" is an internal variable: marker count in the cluster.
+                'symbol': {
+                  'markerType': 'ellipse',
+                  'markerFill': {
+                    property: 'count',
+                    type: 'interval',
+                    stops: [
+                      [0, 'rgb(135, 196, 240)'],
+                      [9, '#1bbc9b'],
+                      [99, 'rgb(216, 115, 149)']
+                    ]
+                  },
+                  'markerFillOpacity': 0.7,
+                  'markerLineOpacity': 1,
+                  'markerLineWidth': 3,
+                  'markerLineColor': '#fff',
+                  'markerWidth': {
+                    property: 'count',
+                    type: 'interval',
+                    stops: [
+                      [0, 40],
+                      [9, 60],
+                      [99, 80]
+                    ]
+                  },
+                  'markerHeight': {
+                    property: 'count',
+                    type: 'interval',
+                    stops: [
+                      [0, 40],
+                      [9, 60],
+                      [99, 80]
+                    ]
+                  }
                 },
-                'markerFillOpacity': 0.7,
-                'markerLineOpacity': 1,
-                'markerLineWidth': 3,
-                'markerLineColor': '#fff',
-                'markerWidth': {
-                  property: 'count',
-                  type: 'interval',
-                  stops: [
-                    [0, 40],
-                    [9, 60],
-                    [99, 80]
-                  ]
-                },
-                'markerHeight': {
-                  property: 'count',
-                  type: 'interval',
-                  stops: [
-                    [0, 40],
-                    [9, 60],
-                    [99, 80]
-                  ]
-                }
-              },
-              'drawClusterText': true,
-              'geometryEvents': true,
-              'single': true
+                'drawClusterText': true,
+                'geometryEvents': true,
+                'single': true
+              });
+              Vue.mapInstance.addLayer(clusterLayer);
             });
-            Vue.mapInstance.addLayer(clusterLayer);
-          });
+          }
+        }
+        else{
+            Vue.mapInstance.getLayer('cluster').hide()
+        }
       },
       //加载企业复工热力图
-      heatMapInfo(){
+      heatMapInfo(i){
+        if(i){
+          if(Vue.mapInstance.getLayer('heat') != null){
+              Vue.mapInstance.getLayer('heat').show() 
+          }else{
             fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
               const testpoint = result.points;
               let data = testpoint.map(function (p) { 
@@ -99,13 +113,16 @@
               });
               Vue.mapInstance.addLayer(heatLayer);
             });
+          }
+        }else{
+              Vue.mapInstance.getLayer('heat').hide() 
+        }
       },
       //加载区划信息风险等级图
       polygon(i) {
         if(i){
           if(Vue.mapInstance.getLayer('v') != null){
               Vue.mapInstance.getLayer('v').show()   
-              console.log(111)
           }
           else{
             fetch("http://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
@@ -151,42 +168,50 @@
       },
 
       //加载区县疫情确诊图
-      allPatient(){
-          fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
-            const features = result.features;
-            //var layer=Vue.mapInstance.getLayer('v');
-            var patientLayer= new maptalks.VectorLayer('patient');
-            for (var i = 0; i < features.length; i++) {
-              var a = features[i];
-              if(!a.properties.ALLPATIENT){
-                a.properties.ALLPATIENT='0';
-              }
-              //console.log(a.geometry.coordinates);
-              var marker = new maptalks.Marker(
-                a.geometry.coordinates,
-                {
-                  'properties' : {
-                  'name' :'行政区划：'+a.properties.NAME+'\n'+'确诊人数：'+a.properties.ALLPATIENT
-                },
-                symbol : [
-                  {
-                    'markerFile'   : imgURL,
-                    'markerWidth'  : 20,
-                    'markerHeight' : 30
-                  },
-                  {
-                    'textFaceName' : 'sans-serif',
-                    'textName' : '{name}',
-                    'textSize' : 14,
-                    'textDy'   : 24
+      allPatient(i){
+        if(i){
+          if(Vue.mapInstance.getLayer('patient') != null){
+              Vue.mapInstance.getLayer('patient').show() 
+          }else{
+            fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+                const features = result.features;
+                //var layer=Vue.mapInstance.getLayer('v');
+                var patientLayer= new maptalks.VectorLayer('patient');
+                for (var i = 0; i < features.length; i++) {
+                  var a = features[i];
+                  if(!a.properties.ALLPATIENT){
+                    a.properties.ALLPATIENT='0';
                   }
-                ]
-              }
-            );
-            patientLayer.addGeometry(marker);
-            }
-            Vue.mapInstance.addLayer(patientLayer);
-          });
+                  //console.log(a.geometry.coordinates);
+                  var marker = new maptalks.Marker(
+                    a.geometry.coordinates,
+                    {
+                      'properties' : {
+                      'name' :'行政区划：'+a.properties.NAME+'\n'+'确诊人数：'+a.properties.ALLPATIENT
+                    },
+                    symbol : [
+                      {
+                        'markerFile'   : imgURL,
+                        'markerWidth'  : 20,
+                        'markerHeight' : 30
+                      },
+                      {
+                        'textFaceName' : 'sans-serif',
+                        'textName' : '{name}',
+                        'textSize' : 14,
+                        'textDy'   : 24
+                      }
+                    ]
+                  }
+                );
+                patientLayer.addGeometry(marker);
+                }
+                Vue.mapInstance.addLayer(patientLayer);
+              });
+          }
+        }else{
+              Vue.mapInstance.getLayer('patient').hide() 
+        }
       },
 
       //加载区县疫情治愈图
