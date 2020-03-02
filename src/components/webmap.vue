@@ -215,39 +215,46 @@
       },
 
       //加载区县疫情治愈图
-      allHeal() {
-        fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
-          const features = result.features;
-          var healLayer = new maptalks.VectorLayer('vector');
-          for (var i = 0; i < features.length; i++) {
-            var a = features[i];
-            if (!a.properties.ALLREHEAL) {
-              a.properties.ALLREHEAL = '0';
-            }
-            //console.log(a.geometry.coordinates);
-            var marker = new maptalks.Marker(
-              a.geometry.coordinates, {
-                'properties': {
-                  'name': '行政区划：' + a.properties.NAME + '\n' + '治愈人数：' + a.properties.ALLREHEAL
-                },
-                symbol: [{
-                    'markerFile': imgURL,
-                    'markerWidth': 20,
-                    'markerHeight': 30
-                  },
-                  {
-                    'textFaceName': 'sans-serif',
-                    'textName': '{name}',
-                    'textSize': 14,
-                    'textDy': 24
-                  }
-                ]
-              }
-            );
-            healLayer.addGeometry(marker);
+      allHeal(i) {
+        if(i){
+          if(Vue.mapInstance.getLayer('heal') != null){
+              Vue.mapInstance.getLayer('heal').show()
+          }else{
+              fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+                        const features = result.features;
+                        var healLayer = new maptalks.VectorLayer('heal');
+                        for (var i = 0; i < features.length; i++) {
+                          var a = features[i];
+                          if (!a.properties.ALLREHEAL) {
+                            a.properties.ALLREHEAL = '0';
+                          }
+                          var marker = new maptalks.Marker(
+                            a.geometry.coordinates, {
+                              'properties': {
+                                'name': '行政区划：' + a.properties.NAME + '\n' + '治愈人数：' + a.properties.ALLREHEAL
+                              },
+                              symbol: [{
+                                  'markerFile': imgURL,
+                                  'markerWidth': 20,
+                                  'markerHeight': 30
+                                },
+                                {
+                                  'textFaceName': 'sans-serif',
+                                  'textName': '{name}',
+                                  'textSize': 14,
+                                  'textDy': 24
+                                }
+                              ]
+                            }
+                          );
+                          healLayer.addGeometry(marker);
+                        }
+                        Vue.mapInstance.addLayer(healLayer);
+                });
           }
-          Vue.mapInstance.addLayer(healLayer);
-        });
+        }else{
+              Vue.mapInstance.getLayer('heal').hide()
+        }
       },
 
       //加载影像底图
@@ -298,7 +305,7 @@
         'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
       }));
       this.polygon(true);
-      console.log(111)
+
     },
 
     beforeCreate() {}, //生命周期 - 创建之前rk

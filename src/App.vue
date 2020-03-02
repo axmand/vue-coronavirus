@@ -37,6 +37,9 @@
             display_patient(i){
                 this.$refs.webmap.allPatient(i);
             },
+            display_heal(i){
+                this.$refs.webmap.allHeal(i);
+            },
             hybird_map(){
                 this.$refs.webmap.hybird_map();
             },
