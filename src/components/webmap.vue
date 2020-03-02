@@ -33,60 +33,59 @@
     methods: {
       //聚点图
       markInfo(i) {
-        if(i){
-        fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
-          let markers = []
-          const testpoint = result.points;
-          for (var i = 0; i < testpoint.length; i++) {
-            var a = testpoint[i];
-            markers.push(new maptalks.Marker([a[1], a[0]]));
-          }
-          let clusterLayer = new ClusterLayer('cluster', markers, {
-            'noClusterWithOneMarker': false,
-            'maxClusterZoom': 18,
-            //"count" is an internal variable: marker count in the cluster.
-            'symbol': {
-              'markerType': 'ellipse',
-              'markerFill': {
-                property: 'count',
-                type: 'interval',
-                stops: [
-                  [0, 'rgb(135, 196, 240)'],
-                  [9, '#1bbc9b'],
-                  [99, 'rgb(216, 115, 149)']
-                ]
+        if (i) {
+          fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+            let markers = []
+            const testpoint = result.points;
+            for (var i = 0; i < testpoint.length; i++) {
+              var a = testpoint[i];
+              markers.push(new maptalks.Marker([a[1], a[0]]));
+            }
+            let clusterLayer = new ClusterLayer('cluster', markers, {
+              'noClusterWithOneMarker': false,
+              'maxClusterZoom': 18,
+              //"count" is an internal variable: marker count in the cluster.
+              'symbol': {
+                'markerType': 'ellipse',
+                'markerFill': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 'rgb(135, 196, 240)'],
+                    [9, '#1bbc9b'],
+                    [99, 'rgb(216, 115, 149)']
+                  ]
+                },
+                'markerFillOpacity': 0.7,
+                'markerLineOpacity': 1,
+                'markerLineWidth': 3,
+                'markerLineColor': '#fff',
+                'markerWidth': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 40],
+                    [9, 60],
+                    [99, 80]
+                  ]
+                },
+                'markerHeight': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 40],
+                    [9, 60],
+                    [99, 80]
+                  ]
+                }
               },
-              'markerFillOpacity': 0.7,
-              'markerLineOpacity': 1,
-              'markerLineWidth': 3,
-              'markerLineColor': '#fff',
-              'markerWidth': {
-                property: 'count',
-                type: 'interval',
-                stops: [
-                  [0, 40],
-                  [9, 60],
-                  [99, 80]
-                ]
-              },
-              'markerHeight': {
-                property: 'count',
-                type: 'interval',
-                stops: [
-                  [0, 40],
-                  [9, 60],
-                  [99, 80]
-                ]
-              }
-            },
-            'drawClusterText': true,
-            'geometryEvents': true,
-            'single': true
+              'drawClusterText': true,
+              'geometryEvents': true,
+              'single': true
+            });
+            Vue.mapInstance.addLayer(clusterLayer);
           });
-          Vue.mapInstance.addLayer(clusterLayer);
-        });
-        }
-        else{
+        } else {
           Vue.mapInstance.removeLayer("cluster");
         }
       },
@@ -105,15 +104,14 @@
               });
               Vue.mapInstance.addLayer(heatLayer);
             });
-        }
-        else{
+        } else {
           Vue.mapInstance.removeLayer("heat");
         }
 
       },
       //加载区划信息风险等级图
       polygon(i) {
-        if(i){
+        if (i) {
           fetch("http://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
             Vue.mapInstance.addLayer(new maptalks.VectorLayer('v'))
             const geometries = maptalks.GeoJSON.toGeometry(county);
@@ -149,8 +147,7 @@
             ]);
             Vue.mapInstance.getLayer('v').bringToBack()
           });
-        }
-        else{
+        } else {
           Vue.mapInstance.removeLayer("v");
         }
       },
@@ -198,40 +195,38 @@
           Vue.mapInstance.removeLayer("patient");
         }
       },
-      
+
       //加载区县疫情治愈图
-      allHeal(){
+      allHeal() {
         fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
           const features = result.features;
-          var healLayer= new maptalks.VectorLayer('vector');
+          var healLayer = new maptalks.VectorLayer('vector');
           for (var i = 0; i < features.length; i++) {
             var a = features[i];
-            if(!a.properties.ALLREHEAL){
-              a.properties.ALLREHEAL='0';
+            if (!a.properties.ALLREHEAL) {
+              a.properties.ALLREHEAL = '0';
             }
             //console.log(a.geometry.coordinates);
             var marker = new maptalks.Marker(
-              a.geometry.coordinates,
-              {
-                 'properties' : {
-                 'name' :'行政区划：'+a.properties.NAME+'\n'+'治愈人数：'+a.properties.ALLREHEAL
-              },
-              symbol : [
-                 {
-                  'markerFile'   : imgURL,
-                  'markerWidth'  : 20,
-                  'markerHeight' : 30
+              a.geometry.coordinates, {
+                'properties': {
+                  'name': '行政区划：' + a.properties.NAME + '\n' + '治愈人数：' + a.properties.ALLREHEAL
                 },
-                {
-                  'textFaceName' : 'sans-serif',
-                  'textName' : '{name}',
-                  'textSize' : 14,
-                  'textDy'   : 24
-                }
-              ]
-            }
-           );
-           healLayer.addGeometry(marker);
+                symbol: [{
+                    'markerFile': imgURL,
+                    'markerWidth': 20,
+                    'markerHeight': 30
+                  },
+                  {
+                    'textFaceName': 'sans-serif',
+                    'textName': '{name}',
+                    'textSize': 14,
+                    'textDy': 24
+                  }
+                ]
+              }
+            );
+            healLayer.addGeometry(marker);
           }
           Vue.mapInstance.addLayer(healLayer);
         });
