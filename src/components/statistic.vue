@@ -3,25 +3,25 @@
         <el-row id="row1">
             <el-col :span='3'>
                 <ul type="none">
-                <li id="num" style="color:red">66907</li>
+                <li id="num" style="color:red">67217</li>
                 <li id='type'>确诊</li>
                 </ul>  
             </el-col>
             <el-col :span='3'>
                 <ul type="none">
-                <li id='num'>2761</li>
+                <li id='num'>2834</li>
                 <li id="type">死亡</li>
                 </ul>  
             </el-col>
             <el-col :span='3'>
                 <ul type="none">
-                <li id="num" style="color:green">31500</li>
+                <li id="num" style="color:green">36167</li>
                 <li id='type'>治愈</li>
                 </ul>  
             </el-col>
         </el-row>
         <el-row id="row2">
-                数据来源    截止2020.3.1 20：00 来源：各地卫健委
+                数据来源    截止2020.3.3 10：00 来源：各地卫健委
         </el-row>
     </div>
 </template>
