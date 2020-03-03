@@ -1,7 +1,12 @@
 <template>
     <div id="app">
+<<<<<<< HEAD
         <img id='img' src ="./assets/Banner.png" width="100%">
         <img id='legend' src ="./assets/legend01.png" style="display:block" @click="display_img">
+=======
+        <img id='img' src="./assets/Banner.png" width="100%">
+        <img id='legend' src="./assets/legend01.png">
+>>>>>>> 9323e502cace18188df0195ad9c12c4004073324
         <p id="title">湖北省疫情综合风险分析系统</p>
         <statistic></statistic>
         <webmap ref="webmap"></webmap>
@@ -15,13 +20,15 @@
     import webmap from './components/webmap';
     import layer from './components/layer';
     import mapChoose from './components/mapChoose';
+    //优化
+    import FastClick from 'fastclick';
     export default {
-        name : 'app',
+        name: 'app',
         components: {
             webmap: webmap,
-            statistic:statistic,
-            layer:layer,
-            mapChoose:mapChoose
+            statistic: statistic,
+            layer: layer,
+            mapChoose: mapChoose
         },
         methods: {
             display_img(i){
@@ -36,26 +43,27 @@
                 // this.$refs.child1得到的子组件实例 
                 this.$refs.webmap.markInfo(i);
             },
-            display_heatmap(i){
+            display_heatmap(i) {
                 this.$refs.webmap.heatMapInfo(i);
             },
-            display_riskmap(i){
+            display_riskmap(i) {
                 this.$refs.webmap.polygon(i);
             },
-            display_patient(i){
+            display_patient(i) {
                 this.$refs.webmap.allPatient(i);
             },
-            display_heal(i){
+            display_heal(i) {
                 this.$refs.webmap.allHeal(i);
             },
-            hybird_map(){
+            hybird_map() {
                 this.$refs.webmap.hybird_map();
             },
-            Vector_map(){
+            Vector_map() {
                 this.$refs.webmap.Vector_map();
             },
         },
         mounted() {
+            FastClick.attach(document.body)
         }
     }
 </script>
@@ -68,22 +76,25 @@
         padding: 0;
         height: 100%;
         width: 100%;
-        z-index:1
+        z-index: 1
     }
+
     #legend {
         position: fixed;
         height: 6em;
         width: auto;
-        z-index:2;
+        z-index: 2;
         left: 3%;
         bottom: 20%;
     }
+
     #img {
         position: fixed;
         width: 100%;
         height: auto;
-        z-index:2
+        z-index: 2
     }
+
     #title {
         position: absolute;
         left: 5%;
@@ -92,8 +103,9 @@
         padding: 0;
         color: #fff;
         font: 1.2em'微软雅黑';
-        z-index:3
+        z-index: 3
     }
+
     /* .el-divider {
         border-radius: 4px;
     } */
