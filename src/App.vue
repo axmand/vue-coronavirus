@@ -1,12 +1,7 @@
 <template>
     <div id="app">
-<<<<<<< HEAD
         <img id='img' src ="./assets/Banner.png" width="100%">
-        <img id='legend' src ="./assets/legend01.png" style="display:block" @click="display_img">
-=======
-        <img id='img' src="./assets/Banner.png" width="100%">
-        <img id='legend' src="./assets/legend01.png">
->>>>>>> 9323e502cace18188df0195ad9c12c4004073324
+        <img id='legend' src ="./assets/legend01.png" style="display:block">
         <p id="title">湖北省疫情综合风险分析系统</p>
         <statistic></statistic>
         <webmap ref="webmap"></webmap>
