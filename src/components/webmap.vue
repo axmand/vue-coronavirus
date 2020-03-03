@@ -202,9 +202,9 @@ export default {
                   },
                   symbol: [
                     {
-                      'markerFile': imgURL_patient,
-                      'markerWidth': 18,
-                      'markerHeight': 25,
+                    'markerFile': imgURL_patient,
+                    'markerWidth': {stops: [[6, 0],[14, 60]]},
+                    'markerHeight': {stops: [[6, 0],[14, 60]]}
                     },
                     // {
                     //   'textFaceName' : 'sans-serif',
