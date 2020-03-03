@@ -82,7 +82,8 @@
   .el-checkbox{
       width: 44%;
       margin-right: 4%;
-      font-size: 0.8em
+      font-size: 0.8em;
+
   }
   #div1 {
     margin: 0%;
@@ -108,4 +109,5 @@
       position: relative;
       left:0.5em
   }
+     * { touch-action: pan-y; } 
 </style>
