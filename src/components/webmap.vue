@@ -224,7 +224,7 @@ export default {
                   'title': '累计确诊人数',
                   'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
                 });
-                marker.openInfoWindow();
+                // marker.openInfoWindow();
               }
             });
           }
@@ -278,7 +278,7 @@ export default {
                 'title': '累计治愈人数',
                 'content': '行政区划：' + Vue.features[j].properties.NAME + ' ' + '治愈人数：' + Vue.features[j].properties.ALLREHEAL
               });
-              marker.openInfoWindow();
+              // marker.openInfoWindow();
             }
           });
         }
@@ -383,4 +383,5 @@ export default {
   left: 0px;
   width: 100%;
 }
+   * { touch-action: pan-y; } 
 </style>

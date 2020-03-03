@@ -58,7 +58,20 @@
             },
         },
         mounted() {
-            FastClick.attach(document.body)
+
+            const str= navigator.userAgent.toLowerCase()
+            const ver=str.match(/cpu iphone os (.*?) like mac os/)
+
+            if(!ver){//非IOS系统
+            console.log(1)
+                FastClick.attach(document.body)
+            }
+            else {
+            if(parseInt(ver[1])< 10){
+                            console.log(2)
+                FastClick.attach(document.body)
+            }
+            }
         }
     }
 </script>
@@ -100,7 +113,7 @@
         font: 1.2em'微软雅黑';
         z-index: 3
     }
-
+   * { touch-action: pan-y; } 
     /* .el-divider {
         border-radius: 4px;
     } */
