@@ -178,7 +178,8 @@ export default {
             for (var j = 0; j < Vue.Patientfeatures.length; j++) {
               Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
                 'title': '累计确诊人数',
-                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLPATIENT
+                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLPATIENT,
+                'autoCloseOn' : 'click'
               });
               // Vue.mapInstance.getLayer('patient').getGeometryById(8).openInfoWindow();
             }
@@ -203,8 +204,8 @@ export default {
                     symbol: [
                       {
                         'markerFile': imgURL_patient,
-                        'markerWidth': 18,
-                        'markerHeight': 25
+                        'markerWidth': {stops: [[6, 0],[14, 60]]},
+                        'markerHeight': {stops: [[6, 0],[14, 60]]}
                       },
                       // {
                       //   'textFaceName' : 'sans-serif',
@@ -222,7 +223,8 @@ export default {
               for (var j = 0; j < Vue.Patientfeatures.length; j++) {
                 Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
                   'title': '累计确诊人数',
-                  'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
+                  'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL,
+                  'autoCloseOn' : 'click'
                 });
                 // marker.openInfoWindow();
               }
@@ -242,7 +244,8 @@ export default {
           for (var j = 0; j < Vue.features.length; j++) {
             Vue.mapInstance.getLayer('heal').getGeometryById(j).setInfoWindow({
               'title': '累计治愈人数',
-              'content': '行政区划：' + Vue.features[j].properties.NAME + ' ' + '治愈人数：' + Vue.features[j].properties.ALLREHEAL
+              'content': '行政区划：' + Vue.features[j].properties.NAME + ' ' + '治愈人数：' + Vue.features[j].properties.ALLREHEAL,
+              'autoCloseOn' : 'click'
             });
             //Vue.mapInstance.getLayer('heal').getGeometryById(4).openInfoWindow();
           }
@@ -263,8 +266,8 @@ export default {
                   },
                   symbol: [{
                     'markerFile': imgURL_heal,
-                    'markerWidth': 18,
-                    'markerHeight': 25
+                    'markerWidth': {stops: [[6, 0],[14, 60]]},
+                    'markerHeight': {stops: [[6, 0],[14, 60]]}
                   },
                   ]
                 }
@@ -276,7 +279,8 @@ export default {
             for (var j = 0; j < Vue.features.length; j++) {
               Vue.mapInstance.getLayer('heal').getGeometryById(j).setInfoWindow({
                 'title': '累计治愈人数',
-                'content': '行政区划：' + Vue.features[j].properties.NAME + ' ' + '治愈人数：' + Vue.features[j].properties.ALLREHEAL
+                'content': '行政区划：' + Vue.features[j].properties.NAME + ' ' + '治愈人数：' + Vue.features[j].properties.ALLREHEAL,
+                'autoCloseOn' : 'click'
               });
               // marker.openInfoWindow();
             }
