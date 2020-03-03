@@ -171,68 +171,66 @@ export default {
 
     //加载区县疫情确诊图
     allPatient(i) {
-        if (i) {
-          if (Vue.mapInstance.getLayer('patient') != null) {
-            Vue.mapInstance.getLayer('patient').show()
+      if (i) {
+        if (Vue.mapInstance.getLayer('patient') != null) {
+          Vue.mapInstance.getLayer('patient').show()
+          //信息框显示
+          for (var j = 0; j < Vue.Patientfeatures.length; j++) {
+            Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
+              'title': '累计确诊人数',
+              'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
+            });
+            // Vue.mapInstance.getLayer('patient').getGeometryById(8).openInfoWindow();
+          }
+        } else {
+          fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+            Vue.Patientfeatures = result.features;
+            //var layer=Vue.mapInstance.getLayer('v');
+            var patientLayer = new maptalks.VectorLayer('patient');
+            for (var i = 0; i < Vue.Patientfeatures.length; i++) {
+              var a = Vue.Patientfeatures[i];
+              if (!a.properties.ALLPATIENT) {
+                a.properties.ALLPATIENT = '0';
+              }
+              //console.log(a.geometry.coordinates);
+              var marker = new maptalks.Marker(
+                a.geometry.coordinates,
+                {
+                  'id': i,
+                  'properties': {
+                    'name': '行政区划：' + a.properties.NAME + '\n' + '确诊人数：' + a.properties.ALLPATIENT
+                  },
+                  symbol: [
+                    {
+                      'markerFile': imgURL_patient,
+                      'markerWidth': 18,
+                      'markerHeight': 25,
+                    },
+                    // {
+                    //   'textFaceName' : 'sans-serif',
+                    //   'textName' : '{name}',
+                    //   'textSize' : 14,
+                    //   'textDy'   : 24
+                    // }
+                  ]
+                }
+              );
+              patientLayer.addGeometry(marker);
+            }
+            Vue.mapInstance.addLayer(patientLayer);
             //信息框显示
             for (var j = 0; j < Vue.Patientfeatures.length; j++) {
               Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
                 'title': '累计确诊人数',
                 'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
               });
-              // Vue.mapInstance.getLayer('patient').getGeometryById(8).openInfoWindow();
+              marker.openInfoWindow();
             }
-          } else {
-            fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
-              Vue.Patientfeatures = result.features;
-              //var layer=Vue.mapInstance.getLayer('v');
-              var patientLayer = new maptalks.VectorLayer('patient');
-              for (var i = 0; i < Vue.Patientfeatures.length; i++) {
-                var a = Vue.Patientfeatures[i];
-                if (!a.properties.ALLPATIENT) {
-                  a.properties.ALLPATIENT = '0';
-                }
-                //console.log(a.geometry.coordinates);
-                var marker = new maptalks.Marker(
-                  a.geometry.coordinates,
-                  {
-                    'id': i,
-                    'properties': {
-                      'name': '行政区划：' + a.properties.NAME + '\n' + '确诊人数：' + a.properties.ALLPATIENT
-                    },
-                    symbol: [
-                      {
-                        'markerFile': imgURL_patient,
-                        //'markerWidth': 18,
-                        //'markerHeight': 25,
-                       'markerWidth': {stops:[[7,15],[14,30]]},
-                       'markerHeight': {stops:[[7,20],[14,40]]},
-                      },
-                      // {
-                      //   'textFaceName' : 'sans-serif',
-                      //   'textName' : '{name}',
-                      //   'textSize' : 14,
-                      //   'textDy'   : 24
-                      // }
-                    ]
-                  }
-                );
-                patientLayer.addGeometry(marker);
-              }
-              Vue.mapInstance.addLayer(patientLayer);
-              //信息框显示
-              for (var j = 0; j < Vue.Patientfeatures.length; j++) {
-                Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
-                  'title': '累计确诊人数',
-                  'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
-                });
-                marker.openInfoWindow();
-              }
-            });
-          }
-        } else {
-          Vue.mapInstance.getLayer('patient').hide()
+          });
         }
+      } else {
+        Vue.mapInstance.getLayer('patient').hide()
+      }
     },
     //加载区县疫情治愈图
     allHeal(i) {
@@ -265,8 +263,8 @@ export default {
                   },
                   symbol: [{
                     'markerFile': imgURL_heal,
-                    'markerWidth': {stops:[[7,15],[14,30]]},
-                    'markerHeight': {stops:[[7,20],[14,40]]},
+                    'markerWidth': 18,
+                    'markerHeight': 25,
                   },
                   ]
                 }
@@ -284,9 +282,9 @@ export default {
             }
           });
         }
-      } else{
+      } else {
         Vue.mapInstance.getLayer('heal').hide()
-       // Vue.mapInstance.removeLayer('heal')
+        // Vue.mapInstance.removeLayer('heal')
       }
     },
 
@@ -345,7 +343,7 @@ export default {
     Vue.mapInstance = new maptalks.Map("WebMap", {
       center: [114.31, 30.31],
       zoom: 7,
-     // maxZoom:14,
+      // maxZoom:14,
       //minZoom:7,
       spatialReference: {
         projection: 'baidu'
