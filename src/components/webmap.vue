@@ -158,6 +158,7 @@
                   }
                 }
               ]);
+                            console.log(vectorLayer)
               Vue.mapInstance.getLayer('v').bringToBack()
             });
           }
@@ -273,6 +274,7 @@
                     'lineWidth': 0.8
                   }
                 }]);
+              // console.log(vectorLayer)
               Vue.mapInstance.getLayer('boundary').bringToBack()
           });
         }
