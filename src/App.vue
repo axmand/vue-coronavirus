@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <img id='img' src ="./assets/Banner.png" width="100%">
-        <img id='legend' src ="./assets/legend01.png" style="display:block">
+        <img id='img' src="./assets/Banner.png" width="100%">
+        <img id='legend' src="./assets/legend01.png" style="display:block">
         <p id="title">湖北省疫情综合风险分析系统</p>
         <statistic></statistic>
         <webmap ref="webmap"></webmap>
@@ -26,11 +26,10 @@
             mapChoose: mapChoose
         },
         methods: {
-            display_img(i){
-                if(i){
+            display_img(i) {
+                if (i) {
                     legend.style.display = "block";
-                }
-                else{
+                } else {
                     legend.style.display = "none";
                 }
             },
@@ -58,18 +57,20 @@
             },
         },
         mounted() {
-
-            const str= navigator.userAgent.toLowerCase()
-            const ver=str.match(/cpu iphone os (.*?) like mac os/)
-
-            if(!ver){//非IOS系统
+            //1. fastclick
+            const str = navigator.userAgent.toLowerCase()
+            const ver = str.match(/cpu iphone os (.*?) like mac os/)
+            if (!ver) { //非IOS系统
+                console.log(1)
                 FastClick.attach(document.body)
+            } else {
+                if (parseInt(ver[1]) < 10) {
+                    console.log(2)
+                    FastClick.attach(document.body)
+                }
             }
-            else {
-            if(parseInt(ver[1])< 10){
-                FastClick.attach(document.body)
-            }
-            }
+            //title
+            document.title = '湖北省疫情综合风险分析系统';
         }
     }
 </script>
@@ -111,7 +112,11 @@
         font: 1.2em'微软雅黑';
         z-index: 3
     }
-   * { touch-action: pan-y; } 
+
+    * {
+        touch-action: pan-y;
+    }
+
     /* .el-divider {
         border-radius: 4px;
     } */
