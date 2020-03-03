@@ -43,6 +43,7 @@
         },
         check1(){
             this.$parent.display_riskmap(this.checked1)
+            this.$parent.display_img(this.checked1)
         },
         check2(){
             this.$parent.display_heatmap(this.checked2)

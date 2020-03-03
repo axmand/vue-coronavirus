@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <img id='img' src ="./assets/Banner.png" width="100%">
-        <img id='legend' src ="./assets/legend01.png">
+        <img id='legend' src ="./assets/legend01.png" style="display:block" @click="display_img">
         <p id="title">湖北省疫情综合风险分析系统</p>
         <statistic></statistic>
         <webmap ref="webmap"></webmap>
@@ -24,6 +24,14 @@
             mapChoose:mapChoose
         },
         methods: {
+            display_img(i){
+                if(i){
+                    legend.style.display = "block";
+                }
+                else{
+                    legend.style.display = "none";
+                }
+            },
             display_cluster(i) {
                 // this.$refs.child1得到的子组件实例 
                 this.$refs.webmap.markInfo(i);
