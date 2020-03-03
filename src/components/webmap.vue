@@ -14,7 +14,9 @@ import {
   HeatLayer
 } from 'maptalks.heatmap';
 
-import imgURL from '../assets/marker1.png';
+import imgURL_patient from '../assets/patient_marker.png';
+import imgURL_heal from '../assets/heal_marker.png';
+
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 export default {
@@ -170,107 +172,121 @@ export default {
     //加载区县疫情确诊图
     allPatient(i) {
       if (i) {
-        // Vue.mapInstance.on('viewchange', function() {
-        //   if (Vue.mapInstance.getZoom() >= 9) {
-            if (Vue.mapInstance.getLayer('patient') != null) {
-              Vue.mapInstance.getLayer('patient').show()
-            } else {
-              fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
-                const features = result.features;
-                //var layer=Vue.mapInstance.getLayer('v');
-                var patientLayer = new maptalks.VectorLayer('patient');
-                for (var i = 0; i < features.length; i++) {
-                  var a = features[i];
-                  if (!a.properties.ALLPATIENT) {
-                    a.properties.ALLPATIENT = '0';
-                  }
-                  //console.log(a.geometry.coordinates);
-                  var marker = new maptalks.Marker(
-                    a.geometry.coordinates,
+        if (Vue.mapInstance.getLayer('patient') != null) {
+          Vue.mapInstance.getLayer('patient').show()
+          //信息框显示
+          for (var j = 0; j < Vue.Patientfeatures.length; j++) {
+            Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
+              'title': '累计确诊人数',
+              'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
+            });
+            Vue.mapInstance.getLayer('patient').getGeometryById(8).openInfoWindow();
+          }
+        } else {
+          fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+            Vue.Patientfeatures = result.features;
+            //var layer=Vue.mapInstance.getLayer('v');
+            var patientLayer = new maptalks.VectorLayer('patient');
+            for (var i = 0; i < Vue.Patientfeatures.length; i++) {
+              var a = Vue.Patientfeatures[i];
+              if (!a.properties.ALLPATIENT) {
+                a.properties.ALLPATIENT = '0';
+              }
+              //console.log(a.geometry.coordinates);
+              var marker = new maptalks.Marker(
+                a.geometry.coordinates,
+                {
+                  'id': i,
+                  'properties': {
+                    'name': '行政区划：' + a.properties.NAME + '\n' + '确诊人数：' + a.properties.ALLPATIENT
+                  },
+                  symbol: [
                     {
-                      'properties': {
-                        'name': '行政区划：' + a.properties.NAME + '\n' + '确诊人数：' + a.properties.ALLPATIENT
-                      },
-                      symbol: [
-                        {
-                          'markerFile': imgURL,
-                          'markerWidth': 20,
-                          'markerHeight': 30
-                        },
-                        {
-                          'textFaceName': 'sans-serif',
-                          'textName': '{name}',
-                          'textSize': 14,
-                          'textDy': 24
-                        }
-                      ]
-                    }
-                  );
-                  patientLayer.addGeometry(marker);
+                      'markerFile': imgURL_patient,
+                      'markerWidth': 18,
+                      'markerHeight': 25
+                    },
+                    // {
+                    //   'textFaceName' : 'sans-serif',
+                    //   'textName' : '{name}',
+                    //   'textSize' : 14,
+                    //   'textDy'   : 24
+                    // }
+                  ]
                 }
-                Vue.mapInstance.addLayer(patientLayer);
-              });
+              );
+              patientLayer.addGeometry(marker);
             }
-
-        //   } else {
-        //     Vue.mapInstance.removeLayer('patient')
-        //   }
-        // })
+            Vue.mapInstance.addLayer(patientLayer);
+            //信息框显示
+            for (var j = 0; j < Vue.Patientfeatures.length; j++) {
+              Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
+                'title': '累计确诊人数',
+                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
+              });
+              marker.openInfoWindow();
+            }
+          });
+        }
       } else {
-        //Vue.mapInstance.getLayer('patient').hide()
-        Vue.mapInstance.removeLayer('patient')
+        Vue.mapInstance.getLayer('patient').hide()
       }
     },
-
     //加载区县疫情治愈图
     allHeal(i) {
       if (i) {
-        // Vue.mapInstance.on('viewchange', function() {
-        //   if (Vue.mapInstance.getZoom() >= 9) {
-            if (Vue.mapInstance.getLayer('heal') != null) {
-              Vue.mapInstance.getLayer('heal').show()
-            } else {
-              fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
-                const features = result.features;
-                var healLayer = new maptalks.VectorLayer('heal');
-                for (var i = 0; i < features.length; i++) {
-                  var a = features[i];
-                  if (!a.properties.ALLREHEAL) {
-                    a.properties.ALLREHEAL = '0';
-                  }
-                  var marker = new maptalks.Marker(
-                    a.geometry.coordinates, {
-                      'properties': {
-                        'name': '行政区划：' + a.properties.NAME + '\n' + '治愈人数：' + a.properties.ALLREHEAL
-                      },
-                      symbol: [{
-                        'markerFile': imgURL,
-                        'markerWidth': 20,
-                        'markerHeight': 30
-                      },
-                      {
-                        'textFaceName': 'sans-serif',
-                        'textName': '{name}',
-                        'textSize': 14,
-                        'textDy': 24
-                      }
-                      ]
-                    }
-                  );
-                  healLayer.addGeometry(marker);
+        if (Vue.mapInstance.getLayer('heal') != null) {
+          Vue.mapInstance.getLayer('heal').show()
+          //信息框显示
+          // const features = result.features;
+          for (var j = 0; j < Vue.features.length; j++) {
+            Vue.mapInstance.getLayer('heal').getGeometryById(j).setInfoWindow({
+              'title': '累计治愈人数',
+              'content': '行政区划：' + Vue.features[j].properties.NAME + ' ' + '治愈人数：' + Vue.features[j].properties.ALLREHEAL
+            });
+            Vue.mapInstance.getLayer('heal').getGeometryById(4).openInfoWindow();
+          }
+        } else {
+          fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+            Vue.features = result.features;
+            var healLayer = new maptalks.VectorLayer('heal');
+            for (var i = 0; i < Vue.features.length; i++) {
+              var a = Vue.features[i];
+              if (!a.properties.ALLREHEAL) {
+                a.properties.ALLREHEAL = '0';
+              }
+              var marker = new maptalks.Marker(
+                a.geometry.coordinates, {
+                  'id': i,
+                  'properties': {
+                    'name': '行政区划：' + a.properties.NAME + '/n' + '治愈人数：' + a.properties.ALLREHEAL
+                  },
+                  symbol: [{
+                    'markerFile': imgURL_heal,
+                    'markerWidth': 18,
+                    'markerHeight': 25
+                  },
+                  ]
                 }
-                Vue.mapInstance.addLayer(healLayer);
-              });
+              );
+              healLayer.addGeometry(marker);
             }
-          // } else {
-          //   Vue.mapInstance.removeLayer('heal')
-          // }
-        // })
+            Vue.mapInstance.addLayer(healLayer);
+            //信息框显示
+            for (var j = 0; j < Vue.features.length; j++) {
+              Vue.mapInstance.getLayer('heal').getGeometryById(j).setInfoWindow({
+                'title': '累计治愈人数',
+                'content': '行政区划：' + Vue.features[j].properties.NAME + ' ' + '治愈人数：' + Vue.features[j].properties.ALLREHEAL
+              });
+              marker.openInfoWindow();
+            }
+          });
+        }
       } else {
-        //Vue.mapInstance.getLayer('heal').hide()
-        Vue.mapInstance.removeLayer('heal')
+        Vue.mapInstance.getLayer('heal').hide()
       }
     },
+
     //加载行政区划
     boundary() {
       if (Vue.mapInstance.getLayer('boundary') != null) {
