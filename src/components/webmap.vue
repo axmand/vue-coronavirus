@@ -171,15 +171,14 @@ export default {
 
     //加载区县疫情确诊图
     allPatient(i) {
-      Vue.mapInstance.on('viewchange', function() {
-        if (i && Vue.mapInstance.getZoom() >= 9) {
+        if (i) {
           if (Vue.mapInstance.getLayer('patient') != null) {
             Vue.mapInstance.getLayer('patient').show()
             //信息框显示
             for (var j = 0; j < Vue.Patientfeatures.length; j++) {
               Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
                 'title': '累计确诊人数',
-                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
+                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLPATIENT
               });
               // Vue.mapInstance.getLayer('patient').getGeometryById(8).openInfoWindow();
             }
@@ -191,7 +190,7 @@ export default {
               for (var i = 0; i < Vue.Patientfeatures.length; i++) {
                 var a = Vue.Patientfeatures[i];
                 if (!a.properties.ALLPATIENT) {
-                  a.properties.ALLPATIENT = '0';
+                  a.properties.ALLPATIENT = '暂无数据';
                 }
                 //console.log(a.geometry.coordinates);
                 var marker = new maptalks.Marker(
@@ -229,17 +228,13 @@ export default {
               }
             });
           }
-        } else if (i && Vue.mapInstance.getZoom() < 9) {
-          Vue.mapInstance.getLayer('patient').hide()
-        } else {
+        }  else {
           Vue.mapInstance.getLayer('patient').hide()
         }
-      })
     },
     //加载区县疫情治愈图
     allHeal(i) {
-      Vue.mapInstance.on('viewchange', function() {
-      if (i&&Vue.mapInstance.getZoom() >= 9) {
+      if (i) {
         if (Vue.mapInstance.getLayer('heal') != null) {
           Vue.mapInstance.getLayer('heal').show()
           //信息框显示
@@ -258,7 +253,7 @@ export default {
             for (var i = 0; i < Vue.features.length; i++) {
               var a = Vue.features[i];
               if (!a.properties.ALLREHEAL) {
-                a.properties.ALLREHEAL = '0';
+                a.properties.ALLREHEAL = '暂无数据';
               }
               var marker = new maptalks.Marker(
                 a.geometry.coordinates, {
@@ -287,12 +282,10 @@ export default {
             }
           });
         }
-      } else if(i && Vue.mapInstance.getZoom() < 9) {
-        Vue.mapInstance.getLayer('heal').hide()
       } else{
         Vue.mapInstance.getLayer('heal').hide()
       }
-      })
+
     },
 
     //加载行政区划

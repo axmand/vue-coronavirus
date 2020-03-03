@@ -15,13 +15,13 @@
             </el-col>
             <el-col :span='3'>
                 <ul type="none">
-                <li id="num" style="color:green">36167</li>
+                <li id="num" style="color:green">36206</li>
                 <li id='type'>治愈</li>
                 </ul>  
             </el-col>
         </el-row>
         <el-row id="row2">
-                数据来源    截止2020.3.3 10：00 来源：各地卫健委
+                数据来源    截止2020.3.3 18：00 来源：各地卫健委
         </el-row>
     </div>
 </template>
