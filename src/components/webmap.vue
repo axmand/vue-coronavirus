@@ -171,8 +171,7 @@ export default {
 
     //加载区县疫情确诊图
     allPatient(i) {
-      Vue.mapInstance.on('viewchange', function() {
-        if (i && Vue.mapInstance.getZoom() >= 9) {
+        if (i) {
           if (Vue.mapInstance.getLayer('patient') != null) {
             Vue.mapInstance.getLayer('patient').show()
             //信息框显示
@@ -204,8 +203,10 @@ export default {
                     symbol: [
                       {
                         'markerFile': imgURL_patient,
-                        'markerWidth': 18,
-                        'markerHeight': 25
+                        //'markerWidth': 18,
+                        //'markerHeight': 25,
+                       'markerWidth': {stops:[[7,15],[14,30]]},
+                       'markerHeight': {stops:[[7,20],[14,40]]},
                       },
                       // {
                       //   'textFaceName' : 'sans-serif',
@@ -229,17 +230,13 @@ export default {
               }
             });
           }
-        } else if (i && Vue.mapInstance.getZoom() < 9) {
-          Vue.mapInstance.getLayer('patient').hide()
         } else {
           Vue.mapInstance.getLayer('patient').hide()
         }
-      })
     },
     //加载区县疫情治愈图
     allHeal(i) {
-      Vue.mapInstance.on('viewchange', function() {
-      if (i&&Vue.mapInstance.getZoom() >= 9) {
+      if (i) {
         if (Vue.mapInstance.getLayer('heal') != null) {
           Vue.mapInstance.getLayer('heal').show()
           //信息框显示
@@ -268,8 +265,8 @@ export default {
                   },
                   symbol: [{
                     'markerFile': imgURL_heal,
-                    'markerWidth': 18,
-                    'markerHeight': 25
+                    'markerWidth': {stops:[[7,15],[14,30]]},
+                    'markerHeight': {stops:[[7,20],[14,40]]},
                   },
                   ]
                 }
@@ -287,12 +284,10 @@ export default {
             }
           });
         }
-      } else if(i && Vue.mapInstance.getZoom() < 9) {
-        Vue.mapInstance.getLayer('heal').hide()
       } else{
         Vue.mapInstance.getLayer('heal').hide()
+       // Vue.mapInstance.removeLayer('heal')
       }
-      })
     },
 
     //加载行政区划
@@ -350,6 +345,8 @@ export default {
     Vue.mapInstance = new maptalks.Map("WebMap", {
       center: [114.31, 30.31],
       zoom: 7,
+     // maxZoom:14,
+      //minZoom:7,
       spatialReference: {
         projection: 'baidu'
       },
