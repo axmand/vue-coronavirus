@@ -177,7 +177,7 @@
               for(var j = 0; j < Vue.Patientfeatures.length; j++){
                 Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
                   'title'     : '累计确诊人数',
-                  'content'   : '行政区划：' + Vue.Patientfeatures[j].properties.NAME  +'确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
+                  'content'   : '行政区划：' + Vue.Patientfeatures[j].properties.NAME  + ' '+'确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
                 });
                 Vue.mapInstance.getLayer('patient').getGeometryById(8).openInfoWindow();
               }
@@ -221,7 +221,7 @@
                 for(var j = 0; j < Vue.Patientfeatures.length; j++){
                   Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
                     'title'     : '累计确诊人数',
-                    'content'   : '行政区划：' + Vue.Patientfeatures[j].properties.NAME  +'确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
+                    'content'   : '行政区划：' + Vue.Patientfeatures[j].properties.NAME  +' '+ '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL
                   });
                   marker.openInfoWindow();
                 }
@@ -242,7 +242,7 @@
               for(var j = 0; j < Vue.features.length; j++){
                 Vue.mapInstance.getLayer('heal').getGeometryById(j).setInfoWindow({
                   'title'     : '累计治愈人数',
-                  'content'   : '行政区划：' + Vue.features[j].properties.NAME  +'治愈人数：' + Vue.features[j].properties.ALLREHEAL
+                  'content'   : '行政区划：' + Vue.features[j].properties.NAME  + ' ' +'治愈人数：' + Vue.features[j].properties.ALLREHEAL
                 });
                 Vue.mapInstance.getLayer('heal').getGeometryById(4).openInfoWindow();
               }
@@ -277,7 +277,7 @@
                         for(var j = 0; j < Vue.features.length; j++){
                           Vue.mapInstance.getLayer('heal').getGeometryById(j).setInfoWindow({
                             'title'     : '累计治愈人数',
-                            'content'   : '行政区划：' + Vue.features[j].properties.NAME  +'治愈人数：' + Vue.features[j].properties.ALLREHEAL
+                            'content'   : '行政区划：' + Vue.features[j].properties.NAME  +' '+'治愈人数：' + Vue.features[j].properties.ALLREHEAL
                           });
                           marker.openInfoWindow();
                         }
