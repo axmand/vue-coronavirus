@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
 
 Vue.prototype.mapInstance = {};
+Vue.prototype.features = {};
 
 const app = new Vue({
     render:h=>h(App)
