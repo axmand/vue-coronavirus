@@ -1,7 +1,9 @@
 <template>
     <div id="app">
         <img id='img' src="./assets/Banner.png" width="100%">
-        <img id='legend' src="./assets/legend01.png" style="display:block">
+        <img id='legend' src="./assets/fengxian.png" style="display:block">
+        <img id='legend2' src="./assets/quezhen.png" style="display:none">
+        <img id='legend3' src="./assets/zhiyu.png" style="display:none">
         <p id="title">湖北省疫情综合风险分析系统</p>
         <webmap ref="webmap"></webmap>
         <layer></layer>
@@ -31,6 +33,20 @@
                     legend.style.display = "block";
                 } else {
                     legend.style.display = "none";
+                }
+            },
+            display_img2(i) {
+                if (i) {
+                    legend2.style.display = "block";
+                } else {
+                    legend2.style.display = "none";
+                }
+            },
+            display_img3(i) {
+                if (i) {
+                    legend3.style.display = "block";
+                } else {
+                    legend3.style.display = "none";
                 }
             },
             display_cluster(i) {
@@ -86,7 +102,25 @@
 
     #legend {
         position: fixed;
-        height: 6em;
+        height: 4em;
+        width: auto;
+        z-index: 2;
+        left: 3%;
+        bottom: 20%;
+    }
+    
+    #legend2 {
+        position: fixed;
+        height: 4em;
+        width: auto;
+        z-index: 2;
+        left: 3%;
+        bottom: 20%;
+    }
+    
+    #legend3 {
+        position: fixed;
+        height: 4em;
         width: auto;
         z-index: 2;
         left: 3%;

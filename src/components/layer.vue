@@ -14,10 +14,9 @@
                 <el-checkbox v-model="checked4" @change="check4" label="确诊统计图" border size="medium"></el-checkbox>
                 <el-checkbox v-model="checked5" @change="check5" label="治愈统计图" border size="medium"></el-checkbox>
             </div>
-            <div id ="div3" >
+            <!-- <div id ="div3" >
                 <el-checkbox v-model="checked2" @change="check2" label="疫情热力图" border size="medium"></el-checkbox>
-                <!-- <el-checkbox v-model="checked4" @change="check4" label="确诊统计图" border size="medium"></el-checkbox> -->
-            </div>
+            </div> -->
         </div>
         <el-button slot="reference" @click="clickbutton" icon="el-icon-s-fold" style="font-size: 1.5em"></el-button>
     </el-popover>
@@ -68,9 +67,11 @@
         },
         check4(){
             this.$parent.display_patient(this.checked4)
+            this.$parent.display_img2(this.checked4)
         },
         check5(){
             this.$parent.display_heal(this.checked5)
+            this.$parent.display_img3(this.checked5)
         }
     },
     mounted () {
