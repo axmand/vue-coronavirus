@@ -79,7 +79,7 @@ export default {
               if(hh < 10){
                     hh += "0";
               }
-              var currentdate = month + seperator1 + strDate +' ' + hh +':00';
+              var currentdate =' '+ month + seperator1 + strDate +' ' + hh +':00' + ' ';
 
               this.$set(this.item,'patient',Vue.Allcount.ALLPATIENT)
               this.$set(this.item,'death',Vue.Allcount.ALLDEATH)
