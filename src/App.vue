@@ -3,10 +3,10 @@
         <img id='img' src="./assets/Banner.png" width="100%">
         <img id='legend' src="./assets/legend01.png" style="display:block">
         <p id="title">湖北省疫情综合风险分析系统</p>
-        <statistic></statistic>
         <webmap ref="webmap"></webmap>
         <layer></layer>
         <mapChoose></mapChoose>
+        <statistic></statistic>
     </div>
 </template>
 
@@ -61,11 +61,9 @@
             const str = navigator.userAgent.toLowerCase()
             const ver = str.match(/cpu iphone os (.*?) like mac os/)
             if (!ver) { //非IOS系统
-                console.log(1)
                 FastClick.attach(document.body)
             } else {
                 if (parseInt(ver[1]) < 10) {
-                    console.log(2)
                     FastClick.attach(document.body)
                 }
             }

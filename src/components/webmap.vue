@@ -191,7 +191,7 @@ export default {
               for (var i = 0; i < Vue.Patientfeatures.length; i++) {
                 var a = Vue.Patientfeatures[i];
                 if (!a.properties.ALLPATIENT) {
-                  a.properties.ALLPATIENT = '暂无数据';
+                  a.properties.ALLPATIENT = '0';
                 }
                 //console.log(a.geometry.coordinates);
                 var marker = new maptalks.Marker(
@@ -340,12 +340,17 @@ export default {
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() { },
+  created() {   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
+    //初始化Count
+    Vue.Allcount = {};
+    Vue.Allcount.ALLPATIENT = 0;
+    Vue.Allcount.ALLDEATH = 0;
+    Vue.Allcount.ALLREHEAL = 0;
     //构建map
     Vue.mapInstance = new maptalks.Map("WebMap", {
-      center: [114.31, 30.31],
+      center: [112.5, 31.1],
       zoom: 7,
       spatialReference: {
         projection: 'baidu'
@@ -364,7 +369,6 @@ export default {
     }));
     this.polygon(true);
     this.boundary();
-
   },
 
   beforeCreate() { }, //生命周期 - 创建之前rk

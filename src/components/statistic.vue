@@ -3,19 +3,19 @@
         <el-row id="row1">
             <el-col :span='3'>
                 <ul type="none">
-                <li id="num" style="color:red">67217</li>
+                <li id="num" style="color:red">{{ item.patient }}</li>
                 <li id='type'>确诊</li>
                 </ul>  
             </el-col>
             <el-col :span='3'>
                 <ul type="none">
-                <li id='num'>2834</li>
+                <li id='num'>{{ item.death }}</li>
                 <li id="type">死亡</li>
                 </ul>  
             </el-col>
             <el-col :span='3'>
                 <ul type="none">
-                <li id="num" style="color:green">36206</li>
+                <li id="num" style="color:green">{{ item.reheal }}</li>
                 <li id='type'>治愈</li>
                 </ul>  
             </el-col>
@@ -25,14 +25,59 @@
         </el-row>
     </div>
 </template>
+ 
+ 
 
 <script>
+import Vue from 'vue';
 export default {
   name: 'statistic',
+  data() {
+    return{
+      item:{
+       }
+    }
+  },
   methods: {
+    GetCount(){
+          fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+            var features = result.features;
+            var ALLPATIENT = 0
+            var ALLDEATH = 0
+            var ALLREHEAL = 0
+            for (var i = 0; i < features.length; i++) {
+              var a = features[i];
+              if (!a.properties.ALLREHEAL) {
+                a.properties.ALLREHEAL = 0;
+              }
+              else if(!a.properties.ALLPATIENT){               
+                 a.properties.ALLPATIENT = 0;
+              }
+              else if(!a.properties.ALLDEATH){
+                a.properties.ALLDEATH = 0
+              }
+              ALLPATIENT += Number(a.properties.ALLPATIENT);
+              ALLDEATH += Number(a.properties.ALLDEATH);
+              ALLREHEAL += Number(a.properties.ALLREHEAL);
+              }
+              Vue.Allcount.ALLPATIENT = ALLPATIENT;
+              Vue.Allcount.ALLDEATH = ALLDEATH;
+              Vue.Allcount.ALLREHEAL = ALLREHEAL;
+              console.log(Vue.Allcount.ALLREHEAL)
+              this.$set(this.item,'patient',Vue.Allcount.ALLPATIENT)
+              this.$set(this.item,'death',Vue.Allcount.ALLDEATH)
+              this.$set(this.item,'reheal',Vue.Allcount.ALLREHEAL)
+          });
+    }
   },
   mounted () {
-  }
+        //初始化Count
+    Vue.Allcount = {};
+    Vue.Allcount.ALLPATIENT = 0;
+    Vue.Allcount.ALLDEATH = 0;
+    Vue.Allcount.ALLREHEAL = 0;
+    this.GetCount()
+  },
 }
 </script>
 

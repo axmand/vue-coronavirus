@@ -10,6 +10,7 @@ Vue.use(ElementUI)
 Vue.prototype.mapInstance = {};
 Vue.prototype.features = {};
 Vue.prototype.Patientfeatures = {};
+Vue.prototype.Allcount = {};
 
 const app = new Vue({
     render:h=>h(App)
