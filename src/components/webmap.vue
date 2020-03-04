@@ -34,7 +34,7 @@ export default {
   //方法集合
   methods: {
     //聚点图
-  markInfo(i) {
+    markInfo(i) {
       if (i) {
         if (Vue.mapInstance.getLayer('cluster') != null) {
           Vue.mapInstance.getLayer('cluster').show()
