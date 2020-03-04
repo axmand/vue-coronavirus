@@ -217,7 +217,8 @@ export default {
                   ]
                 }
               );
-              if (a.properties.RISK == '低风险') {
+              if(a.properties.ALLPATIENT!='暂无数据'){
+              if ((parseInt(a.properties.ALLPATIENT)<=50) && (parseInt(a.properties.ALLPATIENT)>=0)) {
                 marker.updateSymbol({
                   'markerWidth': { stops: [[6, 0], [14, 50]] },
                   'markerHeight': { stops: [[6, 0], [14, 50]] },
@@ -226,7 +227,7 @@ export default {
                   'lineColor': '#fff',
                   'lineWidth': 0.3
                 });
-              } else if (a.properties.RISK == '中风险') {
+              } else if ((parseInt(a.properties.ALLPATIENT)>50) && (parseInt(a.properties.ALLPATIENT)<=200)) {
                 marker.updateSymbol({
                   'markerWidth': { stops: [[6, 0], [14, 70]] },
                   'markerHeight': { stops: [[6, 0], [14, 70]] },
@@ -235,7 +236,7 @@ export default {
                   'lineColor': '#fff',
                   'lineWidth': 0.3
                 });
-              } else if (a.properties.RISK == '高风险') {
+              } else if (parseInt(a.properties.ALLPATIENT)>200) {
                 marker.updateSymbol({
                   'markerWidth': { stops: [[6, 0], [14, 90]] },
                   'markerHeight': { stops: [[6, 0], [14, 90]] },
@@ -245,6 +246,7 @@ export default {
                   'lineWidth': 0.3
                 });
               };
+              };
               patientLayer.addGeometry(marker);
             }
             Vue.mapInstance.addLayer(patientLayer);
@@ -252,7 +254,7 @@ export default {
             for (var j = 0; j < Vue.Patientfeatures.length; j++) {
               Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
                 'title': '累计确诊人数',
-                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL,
+                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLPATIENT,
                 'autoCloseOn': 'click'
               });
               // marker.openInfoWindow();
@@ -301,25 +303,8 @@ export default {
                   ]
                 }
               );
-              if (a.properties.RISK == '低风险') {
-                marker.updateSymbol({
-                  'markerWidth': { stops: [[6, 0], [14, 90]] },
-                  'markerHeight': { stops: [[6, 0], [14, 90]] },
-                  'markerFill': 'rgb(0,255,0)',
-                  'markOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                });
-              } else if (a.properties.RISK == '中风险') {
-                marker.updateSymbol({
-                  'markerWidth': { stops: [[6, 0], [14, 70]] },
-                  'markerHeight': { stops: [[6, 0], [14, 70]] },
-                  'markerFill': 'rgb(255,255,0)',
-                  'markOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                });
-              } else if (a.properties.RISK == '高风险') {
+              if(a.properties.ALLREHEAL!='暂无数据'){
+              if ((parseInt(a.properties.ALLREHEAL)<=50) && (parseInt(a.properties.ALLREHEAL)>=0)) {
                 marker.updateSymbol({
                   'markerWidth': { stops: [[6, 0], [14, 50]] },
                   'markerHeight': { stops: [[6, 0], [14, 50]] },
@@ -328,6 +313,25 @@ export default {
                   'lineColor': '#fff',
                   'lineWidth': 0.3
                 });
+              } else if ((parseInt(a.properties.ALLREHEAL)<=200) && (parseInt(a.properties.ALLREHEAL)>50)) {
+                marker.updateSymbol({
+                  'markerWidth': { stops: [[6, 0], [14, 70]] },
+                  'markerHeight': { stops: [[6, 0], [14, 70]] },
+                  'markerFill': 'rgb(255,255,0)',
+                  'markOpacity': 0.5,
+                  'lineColor': '#fff',
+                  'lineWidth': 0.3
+                });
+              } else if (parseInt(a.properties.ALLREHEAL)>200) {
+                marker.updateSymbol({
+                  'markerWidth': { stops: [[6, 0], [14, 90]] },
+                  'markerHeight': { stops: [[6, 0], [14, 90]] },
+                  'markerFill': 'rgb(0,255,0)',
+                  'markOpacity': 0.5,
+                  'lineColor': '#fff',
+                  'lineWidth': 0.3
+                });
+              };
               };
               healLayer.addGeometry(marker);
             }
