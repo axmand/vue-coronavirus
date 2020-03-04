@@ -21,7 +21,7 @@
             </el-col>
         </el-row>
         <el-row id="row2">
-                数据来源    截止2020.3.3 18：00 来源：各地卫健委
+                数据来源    截止{{ item.date }} 来源：各地卫健委
         </el-row>
     </div>
 </template>
@@ -64,10 +64,28 @@ export default {
               Vue.Allcount.ALLDEATH = ALLDEATH;
               Vue.Allcount.ALLREHEAL = ALLREHEAL;
               console.log(Vue.Allcount.ALLREHEAL)
+
+              var date = new Date();
+              var seperator1 = "-";
+              var month = date.getMonth() + 1;
+              var strDate = date.getDate();
+              var hh = date.getHours(); 
+              if (month >= 1 && month <= 9) {
+                  month = "0" + month;
+              }
+              if (strDate >= 0 && strDate <= 9) {
+                  strDate = "0" + strDate;
+              }
+              if(hh < 10){
+                    hh += "0";
+              }
+              var currentdate = month + seperator1 + strDate +' ' + hh +':00';
+
               this.$set(this.item,'patient',Vue.Allcount.ALLPATIENT)
               this.$set(this.item,'death',Vue.Allcount.ALLDEATH)
               this.$set(this.item,'reheal',Vue.Allcount.ALLREHEAL)
-          });
+              this.$set(this.item,'date',currentdate)
+            });
     }
   },
   mounted () {
@@ -102,7 +120,7 @@ export default {
     display:table;
     text-align: center;
     padding-bottom: 2%;
-    font-size: 0.6em
+    font-size: 0.7em
   }
   .ul{
       display:table;
