@@ -257,7 +257,7 @@ export default {
             for (var j = 0; j < Vue.Patientfeatures.length; j++) {
               Vue.mapInstance.getLayer('patient').getGeometryById(j).setInfoWindow({
                 'title': '累计确诊人数',
-                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLREHEAL,
+                'content': '行政区划：' + Vue.Patientfeatures[j].properties.NAME + ' ' + '确诊人数：' + Vue.Patientfeatures[j].properties.ALLPATIENT,
                 'autoCloseOn': 'click'
               });
               // marker.openInfoWindow();
