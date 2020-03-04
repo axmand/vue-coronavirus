@@ -62,9 +62,9 @@ export default {
                   property: 'count',
                   type: 'interval',
                   stops: [
-                    [0, 'rgb(135, 196, 240)'],
-                    [9, '#1bbc9b'],
-                    [99, 'rgb(216, 115, 149)']
+                    [100, 'rgb(135, 196, 240)'],
+                    [200, '#1bbc9b'],
+                    [300, 'rgb(216, 115, 149)']
                   ]
                 },
                 'markerFillOpacity': 0.7,
