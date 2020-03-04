@@ -40,12 +40,17 @@ export default {
           Vue.mapInstance.getLayer('cluster').show()
         }
         else {
-          fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+          fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
             let markers = []
-            const testpoint = result.points;
-            for (var i = 0; i < testpoint.length; i++) {
-              var a = testpoint[i];
-              markers.push(new maptalks.Marker([a[1], a[0]]));
+            var features = result.features;
+            for (var i = 0; i < features.length; i++){
+              var a = features[i];
+              if (!a.properties.ALLPATIENT) {
+                a.properties.ALLPATIENT = 0;
+              }
+              for (var c = 0; c < a.properties.ALLPATIENT; c++) {
+                  markers.push(new maptalks.Marker(a.geometry.coordinates));
+              }
             }
             let clusterLayer = new ClusterLayer('cluster', markers, {
               'noClusterWithOneMarker': false,
@@ -58,8 +63,8 @@ export default {
                   type: 'interval',
                   stops: [
                     [0, 'rgb(135, 196, 240)'],
-                    [9, '#1bbc9b'],
-                    [99, 'rgb(216, 115, 149)']
+                    [100, '#1bbc9b'],
+                    [300, 'rgb(216, 115, 149)']
                   ]
                 },
                 'markerFillOpacity': 0.7,

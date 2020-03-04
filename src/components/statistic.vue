@@ -63,8 +63,7 @@ export default {
               Vue.Allcount.ALLPATIENT = ALLPATIENT;
               Vue.Allcount.ALLDEATH = ALLDEATH;
               Vue.Allcount.ALLREHEAL = ALLREHEAL;
-              console.log(Vue.Allcount.ALLREHEAL)
-
+              //GET DATE
               var date = new Date();
               var seperator1 = "-";
               var month = date.getMonth() + 1;
@@ -80,7 +79,7 @@ export default {
                     hh += "0";
               }
               var currentdate =' '+ month + seperator1 + strDate +' ' + hh +':00' + ' ';
-
+              //update data
               this.$set(this.item,'patient',Vue.Allcount.ALLPATIENT)
               this.$set(this.item,'death',Vue.Allcount.ALLDEATH)
               this.$set(this.item,'reheal',Vue.Allcount.ALLREHEAL)
@@ -89,7 +88,7 @@ export default {
     }
   },
   mounted () {
-        //初始化Count
+    //初始化Count
     Vue.Allcount = {};
     Vue.Allcount.ALLPATIENT = 0;
     Vue.Allcount.ALLDEATH = 0;
