@@ -8,7 +8,7 @@
         <div class="scroll-container">
             <div id="div1">
                 <el-checkbox v-model="checked1"  @change="check1" label="区县风险图" border size="medium"></el-checkbox>
-                <el-checkbox v-model="checked3" @change="check3" label="疫情聚合图" border size="medium" v-loading.fullscreen.lock="fullscreenLoading"></el-checkbox>
+                <el-checkbox v-model="checked3" @change="check3" label="疫情聚合图" border size="medium"></el-checkbox>
             </div >
             <div id ="div2" >
                 <el-checkbox v-model="checked4" @change="check4" label="确诊统计图" border size="medium"></el-checkbox>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+    import Vue from 'vue';
     export default {
     name: 'layer',
     data() {
@@ -50,11 +51,20 @@
             this.$parent.display_heatmap(this.checked2)
         },
         check3(){
-            // this.fullscreenLoading = true;
-            this.$parent.display_cluster(this.checked3)
-            // setTimeout(() => {
-            //     this.fullscreenLoading = false;
-            // }, 2000);
+            if(Vue.Flag == 1){
+                const loading = this.$loading({
+                lock: true,
+                text: 'Loading',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
+                });
+                this.$parent.display_cluster(this.checked3)
+                loading.close();
+                Vue.Flag += 1
+            }
+            else{
+                this.$parent.display_cluster(this.checked3)
+            }
         },
         check4(){
             this.$parent.display_patient(this.checked4)
@@ -64,6 +74,7 @@
         }
     },
     mounted () {
+         Vue.Flag = 1;
     }
     }
 </script>

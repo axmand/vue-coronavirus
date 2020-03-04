@@ -11,6 +11,7 @@ Vue.prototype.mapInstance = {};
 Vue.prototype.features = {};
 Vue.prototype.Patientfeatures = {};
 Vue.prototype.Allcount = {};
+Vue.prototype.Flag = 0;
 
 const app = new Vue({
     render:h=>h(App)
