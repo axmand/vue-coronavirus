@@ -63,8 +63,8 @@ export default {
                   type: 'interval',
                   stops: [
                     [0, 'rgb(135, 196, 240)'],
-                    [100, '#1bbc9b'],
-                    [300, 'rgb(216, 115, 149)']
+                    [9, '#1bbc9b'],
+                    [99, 'rgb(216, 115, 149)']
                   ]
                 },
                 'markerFillOpacity': 0.7,
