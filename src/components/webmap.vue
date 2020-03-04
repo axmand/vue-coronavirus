@@ -34,7 +34,7 @@ export default {
   //方法集合
   methods: {
     //聚点图
-    markInfo(i) {
+  markInfo(i) {
       if (i) {
         if (Vue.mapInstance.getLayer('cluster') != null) {
           Vue.mapInstance.getLayer('cluster').show()
@@ -108,13 +108,24 @@ export default {
         if (Vue.mapInstance.getLayer('heat') != null) {
           Vue.mapInstance.getLayer('heat').show()
         } else {
-          fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
-            const testpoint = result.points;
-            let data = testpoint.map(function(p) {
-              return [p[1], p[0]];
+          fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+            let patient=[]
+            var features = result.features;
+            for (var i = 0; i < features.length; i++){
+              var a = features[i];
+              if (!a.properties.ALLPATIENT) {
+                a.properties.ALLPATIENT = 0;
+              }
+              for (var c = 0; c < a.properties.ALLPATIENT; c++) {
+                  patient.push(a.geometry.coordinates);
+              }
+            }          
+           // const testpoint = result.points;
+            let data = patient.map(function(p) {
+              return [p[0], p[1]];
             });
             let heatLayer = new HeatLayer('heat', data, {
-              'heatValueScale': 0.7,
+              'heatValueScale': 0.4,
               'forceRenderOnRotating': true,
               'forceRenderOnMoving': false
             });
