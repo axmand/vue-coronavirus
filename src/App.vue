@@ -9,6 +9,7 @@
         <layer></layer>
         <mapChoose></mapChoose>
         <statistic></statistic>
+        <Drawer></Drawer>
     </div>
 </template>
 
@@ -17,6 +18,7 @@
     import webmap from './components/webmap';
     import layer from './components/layer';
     import mapChoose from './components/mapChoose';
+    import Drawer from './components/Drawer'
     //优化
     import FastClick from 'fastclick';
     export default {
@@ -25,7 +27,8 @@
             webmap: webmap,
             statistic: statistic,
             layer: layer,
-            mapChoose: mapChoose
+            mapChoose: mapChoose,
+            Drawer: Drawer
         },
         methods: {
             display_img(i) {
