@@ -26,7 +26,9 @@
     "maptalks": "^0.46.0",
     "maptalks.heatmap": "^0.6.1",
     "maptalks.markercluster": "^0.8.3",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-baidu-map": "^0.21.22",
+    "vue-jsonp": "^0.1.8"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",

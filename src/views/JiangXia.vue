@@ -20,36 +20,33 @@
            webmap : webmap,
            info : info
         },
-        methods: {
-            getMylocation(){
-                Vue.mapInstance.setCenter([114.330506,30.358314])
-                Vue.mapInstance.setZoom(17)
-                if(navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(this.$options.methods.displayLocation,this.$options.methods.displayError);
-                }else{
-                    alert('no geolocation support');
-                }
-            },
 
-            displayLocation(position){
-                var lat=position.coords.latitude;
-                var lon=position.coords.longitude;
-                Vue.mapInstance.setCenter([num(lon),num(lat)])
-            },
-
-            displayError(error){
-                var errorTypes={
-                    0:'unknow error',
-                    1:'permission denied by user',
-                    2:'position is not avaliable',
-                    3:'request time out'
-                };
-                var errorMessage=errorTypes[error.code];
-                console.log(errorMessage);
+        data(){
+            return{
             }
         },
+
+        methods: {
+            getPositon() {
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                // mk = new BMap.Marker(r.point);
+                console.log(r.point);
+                //getAddress(r.point);
+                } else {
+                alert('failed' + this.getStatus());
+                return '';
+                }
+            });
+            },
+            getMylocation(){
+                // Vue.mapInstance.setCenter([114.330506,30.358314])
+                Vue.mapInstance.setZoom(17)
+            },
+        },
         mounted () {
-            this.getMylocation()
+            this.getPositon()
         }
     }
 </script>
