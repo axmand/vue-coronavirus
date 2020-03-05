@@ -14,8 +14,15 @@ import {
   HeatLayer
 } from 'maptalks.heatmap';
 
+
 import imgURL_patient from '../assets/patient_marker.png';
 import imgURL_heal from '../assets/heal_marker.png';
+
+//引入百度api,需要安装npm i vue-baidu-map --save
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, {
+  ak: 'ZhHamcsfqBewPZERHpGAvzBZZqQ643tN'  //这个地方是官方提供的ak密钥
+})
 
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
@@ -43,13 +50,13 @@ export default {
           fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
             let markers = []
             var features = result.features;
-            for (var i = 0; i < features.length; i++){
+            for (var i = 0; i < features.length; i++) {
               var a = features[i];
               if (!a.properties.ALLPATIENT) {
                 a.properties.ALLPATIENT = 0;
               }
               for (var c = 0; c < a.properties.ALLPATIENT; c++) {
-                  markers.push(new maptalks.Marker(a.geometry.coordinates));
+                markers.push(new maptalks.Marker(a.geometry.coordinates));
               }
             }
             let clusterLayer = new ClusterLayer('cluster', markers, {
@@ -104,58 +111,58 @@ export default {
     },
     //江夏聚点图
     markInfo2() {
-        fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
-            let markers = []
-            const testpoints = result.points;
-            for (var i = 0; i < testpoints.length; i++){
-                  var a = testpoints[i];
-                  markers.push(new maptalks.Marker([a[1],a[0]]))
+      fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+        let markers = []
+        const testpoints = result.points;
+        for (var i = 0; i < testpoints.length; i++) {
+          var a = testpoints[i];
+          markers.push(new maptalks.Marker([a[1], a[0]]))
+        }
+        let clusterLayer = new ClusterLayer('cluster2', markers, {
+          'noClusterWithOneMarker': false,
+          'maxClusterZoom': 18,
+          //"count" is an internal variable: marker count in the cluster.
+          'symbol': {
+            'markerType': 'ellipse',
+            'markerFill': {
+              property: 'count',
+              type: 'interval',
+              stops: [
+                [0, 'rgb(135, 196, 240)'],
+                [9, '#1bbc9b'],
+                [99, 'rgb(216, 115, 149)']
+              ]
+            },
+            'markerFillOpacity': 0.7,
+            'markerLineOpacity': 1,
+            'markerLineWidth': 3,
+            'markerLineColor': '#fff',
+            'markerWidth': {
+              property: 'count',
+              type: 'interval',
+              stops: [
+                [0, 40],
+                [9, 60],
+                [99, 80]
+              ]
+            },
+            'markerHeight': {
+              property: 'count',
+              type: 'interval',
+              stops: [
+                [0, 40],
+                [9, 60],
+                [99, 80]
+              ]
             }
-            let clusterLayer = new ClusterLayer('cluster2', markers, {
-              'noClusterWithOneMarker': false,
-              'maxClusterZoom': 18,
-              //"count" is an internal variable: marker count in the cluster.
-              'symbol': {
-                'markerType': 'ellipse',
-                'markerFill': {
-                  property: 'count',
-                  type: 'interval',
-                  stops: [
-                    [0, 'rgb(135, 196, 240)'],
-                    [9, '#1bbc9b'],
-                    [99, 'rgb(216, 115, 149)']
-                  ]
-                },
-                'markerFillOpacity': 0.7,
-                'markerLineOpacity': 1,
-                'markerLineWidth': 3,
-                'markerLineColor': '#fff',
-                'markerWidth': {
-                  property: 'count',
-                  type: 'interval',
-                  stops: [
-                    [0, 40],
-                    [9, 60],
-                    [99, 80]
-                  ]
-                },
-                'markerHeight': {
-                  property: 'count',
-                  type: 'interval',
-                  stops: [
-                    [0, 40],
-                    [9, 60],
-                    [99, 80]
-                  ]
-                }
-              },
-              'drawClusterText': true,
-              'geometryEvents': true,
-              'single': true
-            });
-            Vue.mapInstance.addLayer(clusterLayer);
-            console.log(Vue.mapInstance)
-          });
+          },
+          'drawClusterText': true,
+          'geometryEvents': true,
+          'single': true
+        });
+        Vue.mapInstance.addLayer(clusterLayer);
+        console.log(Vue.mapInstance)
+      });
     },
     //加载企业复工热力图
     heatMapInfo(i) {
@@ -164,18 +171,18 @@ export default {
           Vue.mapInstance.getLayer('heat').show()
         } else {
           fetch("http://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
-            let patient=[]
+            let patient = []
             var features = result.features;
-            for (var i = 0; i < features.length; i++){
+            for (var i = 0; i < features.length; i++) {
               var a = features[i];
               if (!a.properties.ALLPATIENT) {
                 a.properties.ALLPATIENT = 0;
               }
               for (var c = 0; c < a.properties.ALLPATIENT; c++) {
-                  patient.push(a.geometry.coordinates);
+                patient.push(a.geometry.coordinates);
               }
-            }          
-           // const testpoint = result.points;
+            }
+            // const testpoint = result.points;
             let data = patient.map(function(p) {
               return [p[0], p[1]];
             });
@@ -288,35 +295,35 @@ export default {
                   ]
                 }
               );
-              if(a.properties.ALLPATIENT!='暂无数据'){
-              if ((parseInt(a.properties.ALLPATIENT)<=50) && (parseInt(a.properties.ALLPATIENT)>=0)) {
-                marker.updateSymbol({
-                  'markerWidth': { stops: [[6, 0], [14, 50]] },
-                  'markerHeight': { stops: [[6, 0], [14, 50]] },
-                  'markerFill': 'rgb(0,255,0)',
-                  'markOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                });
-              } else if ((parseInt(a.properties.ALLPATIENT)>50) && (parseInt(a.properties.ALLPATIENT)<=200)) {
-                marker.updateSymbol({
-                  'markerWidth': { stops: [[6, 0], [14, 70]] },
-                  'markerHeight': { stops: [[6, 0], [14, 70]] },
-                  'markerFill': 'rgb(255,255,0)',
-                  'markOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                });
-              } else if (parseInt(a.properties.ALLPATIENT)>200) {
-                marker.updateSymbol({
-                  'markerWidth': { stops: [[6, 0], [14, 90]] },
-                  'markerHeight': { stops: [[6, 0], [14, 90]] },
-                  'markerFill': 'rgb(255,0,0)',
-                  'markOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                });
-              };
+              if (a.properties.ALLPATIENT != '暂无数据') {
+                if ((parseInt(a.properties.ALLPATIENT) <= 50) && (parseInt(a.properties.ALLPATIENT) >= 0)) {
+                  marker.updateSymbol({
+                    'markerWidth': { stops: [[6, 0], [14, 50]] },
+                    'markerHeight': { stops: [[6, 0], [14, 50]] },
+                    'markerFill': 'rgb(0,255,0)',
+                    'markOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  });
+                } else if ((parseInt(a.properties.ALLPATIENT) > 50) && (parseInt(a.properties.ALLPATIENT) <= 200)) {
+                  marker.updateSymbol({
+                    'markerWidth': { stops: [[6, 0], [14, 70]] },
+                    'markerHeight': { stops: [[6, 0], [14, 70]] },
+                    'markerFill': 'rgb(255,255,0)',
+                    'markOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  });
+                } else if (parseInt(a.properties.ALLPATIENT) > 200) {
+                  marker.updateSymbol({
+                    'markerWidth': { stops: [[6, 0], [14, 90]] },
+                    'markerHeight': { stops: [[6, 0], [14, 90]] },
+                    'markerFill': 'rgb(255,0,0)',
+                    'markOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  });
+                };
               };
               patientLayer.addGeometry(marker);
             }
@@ -374,35 +381,35 @@ export default {
                   ]
                 }
               );
-              if(a.properties.ALLREHEAL!='暂无数据'){
-              if ((parseInt(a.properties.ALLREHEAL)<=50) && (parseInt(a.properties.ALLREHEAL)>=0)) {
-                marker.updateSymbol({
-                  'markerWidth': { stops: [[6, 0], [14, 50]] },
-                  'markerHeight': { stops: [[6, 0], [14, 50]] },
-                  'markerFill': 'rgb(255,0,0)',
-                  'markOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                });
-              } else if ((parseInt(a.properties.ALLREHEAL)<=200) && (parseInt(a.properties.ALLREHEAL)>50)) {
-                marker.updateSymbol({
-                  'markerWidth': { stops: [[6, 0], [14, 70]] },
-                  'markerHeight': { stops: [[6, 0], [14, 70]] },
-                  'markerFill': 'rgb(255,255,0)',
-                  'markOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                });
-              } else if (parseInt(a.properties.ALLREHEAL)>200) {
-                marker.updateSymbol({
-                  'markerWidth': { stops: [[6, 0], [14, 90]] },
-                  'markerHeight': { stops: [[6, 0], [14, 90]] },
-                  'markerFill': 'rgb(0,255,0)',
-                  'markOpacity': 0.5,
-                  'lineColor': '#fff',
-                  'lineWidth': 0.3
-                });
-              };
+              if (a.properties.ALLREHEAL != '暂无数据') {
+                if ((parseInt(a.properties.ALLREHEAL) <= 50) && (parseInt(a.properties.ALLREHEAL) >= 0)) {
+                  marker.updateSymbol({
+                    'markerWidth': { stops: [[6, 0], [14, 50]] },
+                    'markerHeight': { stops: [[6, 0], [14, 50]] },
+                    'markerFill': 'rgb(255,0,0)',
+                    'markOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  });
+                } else if ((parseInt(a.properties.ALLREHEAL) <= 200) && (parseInt(a.properties.ALLREHEAL) > 50)) {
+                  marker.updateSymbol({
+                    'markerWidth': { stops: [[6, 0], [14, 70]] },
+                    'markerHeight': { stops: [[6, 0], [14, 70]] },
+                    'markerFill': 'rgb(255,255,0)',
+                    'markOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  });
+                } else if (parseInt(a.properties.ALLREHEAL) > 200) {
+                  marker.updateSymbol({
+                    'markerWidth': { stops: [[6, 0], [14, 90]] },
+                    'markerHeight': { stops: [[6, 0], [14, 90]] },
+                    'markerFill': 'rgb(0,255,0)',
+                    'markOpacity': 0.5,
+                    'lineColor': '#fff',
+                    'lineWidth': 0.3
+                  });
+                };
               };
               healLayer.addGeometry(marker);
             }
@@ -469,9 +476,82 @@ export default {
         'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
       }));
     },
+
+    //5公里内确诊人数
+    patient_5(lon, lat) {
+      var patient_5 = [];
+      var patient_5Layer = new maptalks.VectorLayer('patient_5');
+      const circle = new maptalks.Circle([lon, lat], 5000);
+      patient_5Layer.addGeometry(circle);
+      fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
+        const jxpatients = result.features;
+        for (var i = 0; i < jxpatients.length; i++) {
+          var contains_5 = circle.containsPoint(new maptalks.Point(jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]));
+          if (contains_5) {
+            patient_5.push(jxpatients[i]);
+          }
+        }
+      });
+      Vue.mapInstance.addLayer(patient_5Layer);
+      console.log(patient_5.length);
+      return patient_5.length;
+    },
+
+    //3公里内确诊人数
+    patient_3(lon, lat) {
+      var patient_3 = [];
+      var patient_3Layer = new maptalks.VectorLayer('patient_3');
+      const circle = new maptalks.Circle([lon, lat], 3000);
+      patient_3Layer.addGeometry(circle);
+      fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
+        const jxpatients = result.features;
+        for (var i = 0; i < jxpatients.length; i++) {
+          var contains_3 = circle.containsPoint(new maptalks.Point(jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]));
+          // console.log(new maptalks.Point(400,300));
+          //var contains_3 = circle.containsPoint(new maptalks.Point(400,300));
+          if (contains_3) {
+            patient_3.push(jxpatients[i]);
+          }
+        }
+      });
+      Vue.mapInstance.addLayer(patient_3Layer);
+      console.log(patient_3.length);
+      return patient_3.length;
+    },
+
+    //百度API定位：获取当前位置
+    getPositon() {
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function(r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+          mk = new BMap.Marker(r.point);
+          return r.point;
+          //getAddress(r.point);
+        } else {
+          alert('failed' + this.getStatus());
+          return '';
+        }
+      });
+    },
+
+    //通过坐标获取地名
+    getAddress(lon, lat) {
+      //var map = new BMap.Map("allmap");
+      //var point = new BMap.Point(116.017637, 37.957109);
+      var point = new BMap.Point(lon, lat);
+      var gc = new BMap.Geocoder();
+      gc.getLocation(point, function(rs) {
+        alert(rs.sematic_description);
+        var addComp = rs.addressComponents;
+        var mapAddress = addComp.province + addComp.city + addComp.district
+          + addComp.street + addComp.streetNumber;
+      });
+      console.log(mapAddress);
+      return mapAddress;
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() {   },
+  created() { },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     //构建map
@@ -498,6 +578,9 @@ export default {
     this.markInfo2();
     this.polygon(true);
     this.boundary();
+    this.patient_3(114.3, 30.5);
+    this.patient_5(114.3, 30.5);
+    this.getAddress(116.017637, 37.957109);
 
   },
 
