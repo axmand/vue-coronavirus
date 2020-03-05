@@ -6,7 +6,6 @@
         <el-drawer
         title="我是 Drawer"
         direction="btt"
-        modal='false'
         :visible.sync="drawer"
         :with-header="false"
         size="50%">
