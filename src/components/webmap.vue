@@ -19,10 +19,10 @@ import imgURL_patient from '../assets/patient_marker.png';
 import imgURL_heal from '../assets/heal_marker.png';
 
 //引入百度api,需要安装npm i vue-baidu-map --save
-import BaiduMap from 'vue-baidu-map'
-Vue.use(BaiduMap, {
-  ak: 'ZhHamcsfqBewPZERHpGAvzBZZqQ643tN'  //这个地方是官方提供的ak密钥
-})
+// import BaiduMap from 'vue-baidu-map'
+// Vue.use(BaiduMap, {
+//   ak: 'ZhHamcsfqBewPZERHpGAvzBZZqQ643tN'  //这个地方是官方提供的ak密钥
+// })
 
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
@@ -578,7 +578,7 @@ export default {
     this.markInfo2();
     this.polygon(true);
     this.boundary();
-    this.patient_3(114.3, 30.5);
+    this.patient_3(114.330506,30.358314);
     this.patient_5(114.3, 30.5);
     this.getAddress(116.017637, 37.957109);
 

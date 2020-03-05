@@ -13,8 +13,11 @@
     import Drawer from './../components/Drawer';
     import webmap from './../components/webmap';
     import info from './../components/info';
+    import { MP } from './../components/map.js'
+
     export default {
         name: 'jiangxia',
+        
         components: {
            Drawer : Drawer,
            webmap : webmap,
@@ -28,25 +31,35 @@
 
         methods: {
             getPositon() {
-            var geolocation = new BMap.Geolocation();
-            geolocation.getCurrentPosition(function(r) {
-                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                // mk = new BMap.Marker(r.point);
-                console.log(r.point);
-                //getAddress(r.point);
-                } else {
-                alert('failed' + this.getStatus());
-                return '';
-                }
-            });
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function(r) {
+                    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                        console.log(r.point);
+                    } else {
+                        alert('failed' + this.getStatus());
+                    }
+                });
             },
-            getMylocation(){
-                // Vue.mapInstance.setCenter([114.330506,30.358314])
-                Vue.mapInstance.setZoom(17)
-            },
+
+            // getMylocation(){
+            //     Vue.mapInstance.setCenter([114.330506,30.358314])
+            //     Vue.mapInstance.setZoom(17)
+            // },
         },
         mounted () {
-            this.getPositon()
+            this.$nextTick(() => {
+                const _this = this
+                MP(_this.ak).then(BMap => {
+                    var geolocation = new BMap.Geolocation();
+                    geolocation.getCurrentPosition(function(r) {
+                        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                            console.log(r.point);
+                        } else {
+                            alert('failed' + this.getStatus());
+                        }
+                    });
+                })
+            })
         }
     }
 </script>
