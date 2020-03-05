@@ -557,7 +557,8 @@ export default {
     //构建map
     Vue.mapInstance = new maptalks.Map("WebMap", {
       center: [112.5, 31.1],
-      zoom: 7,
+      // zoom: 7,
+      zoom: 17,
       //maxZoom:14,
       //minZoom:7,
       spatialReference: {
@@ -578,9 +579,9 @@ export default {
     this.markInfo2();
     this.polygon(true);
     this.boundary();
-    this.patient_3(114.330506,30.358314);
-    this.patient_5(114.3, 30.5);
-    this.getAddress(116.017637, 37.957109);
+    // this.patient_3(114.330506,30.358314);
+    // this.patient_5(114.3, 30.5);
+    // this.getAddress(116.017637, 37.957109);
 
   },
 

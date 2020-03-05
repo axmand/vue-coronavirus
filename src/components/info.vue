@@ -1,7 +1,7 @@
 <template>
     <div id="info">
         <el-row id="row1" >
-                春晖西元 低风险
+                春晖西苑 低风险
         </el-row>
             <el-divider></el-divider>
         <el-row id="row2">

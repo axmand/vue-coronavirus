@@ -29,37 +29,63 @@
             }
         },
 
-        methods: {
-            getPositon() {
-                var geolocation = new BMap.Geolocation();
-                geolocation.getCurrentPosition(function(r) {
-                    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                        console.log(r.point);
-                    } else {
-                        alert('failed' + this.getStatus());
-                    }
-                });
+        methods: {    
+            getMylocation(){
+                Vue.mapInstance.setCenter([113.69801525292405,34.79696180530942])   
+                if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(this.$options.methods.displayLocation(),this.$options.methods.displayError());
+                }else{
+                    alert('no geolocation support');
+                }
             },
 
-            // getMylocation(){
-            //     Vue.mapInstance.setCenter([114.330506,30.358314])
-            //     Vue.mapInstance.setZoom(17)
-            // },
+            displayLocation(position){
+                var lat=position.coords.latitude;
+                var lon=position.coords.longitude;
+                Vue.mapInstance.setCenter([lon,lat])
+                console.log(lat,lon)
+            },
+
+            displayError(error){
+                var errorTypes={
+                    0:'unknow error',
+                    1:'permission denied by user',
+                    2:'position is not avaliable',
+                    3:'request time out'
+                };
+                var errorMessage=errorTypes[error.code];
+                console.log(errorMessage)
+            }    
         },
         mounted () {
-            this.$nextTick(() => {
-                const _this = this
-                MP(_this.ak).then(BMap => {
-                    var geolocation = new BMap.Geolocation();
-                    geolocation.getCurrentPosition(function(r) {
-                        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                            console.log(r.point);
-                        } else {
-                            alert('failed' + this.getStatus());
-                        }
-                    });
-                })
-            })
+            // this.$nextTick(() => {
+            //     const _this = this
+            //     MP(_this.ak).then(BMap => {
+            //         var geolocation = new BMap.Geolocation();
+            //         geolocation.enableSDKLocation();
+            //         geolocation.getCurrentPosition(function(r) {
+            //             if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            //                 console.log(r);
+            //                 var lng = r.point.lng;
+            //                 var lat = r.point.lat
+            //                 Vue.mapInstance.setCenter([lng,lat])
+            //                 // Vue.mapInstance.setZoom(17)
+            //             } else {
+            //                 alert('failed' + this.getStatus());
+            //             }
+            //         });
+            //     })
+            // })
+            // navigator.geolocation.getCurrentPosition(
+            //     function(position) {
+            //           console.log(position.coords.longitude)
+            //           console.log(position.coords.latitude)
+            //     },
+            //     function(error){
+            //           console.log(error)
+            //     }
+            // )
+            this.getMylocation()
         }
     }
 </script>
