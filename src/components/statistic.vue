@@ -76,7 +76,7 @@ export default {
                   strDate = "0" + strDate;
               }
               if(hh < 10){
-                    hh += "0";
+                    hh = "0" + hh;
               }
               var currentdate =' '+ month + seperator1 + strDate +' ' + hh +':00' + ' ';
               //update data
