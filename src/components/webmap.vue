@@ -104,13 +104,20 @@ export default {
     },
     //江夏聚点图
     markInfo2() {
-        fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+        fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
             let markers = []
-            const testpoints = result.points;
-            for (var i = 0; i < testpoints.length; i++){
-                  var a = testpoints[i];
-                  markers.push(new maptalks.Marker([a[1],a[0]]))
+            var features = result.features;
+            for (var i = 0; i < features.length; i++){
+              var a = features[i];
+              markers.push(new maptalks.Marker(a.geometry.coordinates,{
+                  'id': i,
+                  'properties': {
+                    'address':  a.properties.address,
+                    'time': a.properties.time
+                  },
+                }));
             }
+            console.log(markers)
             let clusterLayer = new ClusterLayer('cluster2', markers, {
               'noClusterWithOneMarker': false,
               'maxClusterZoom': 18,
@@ -154,7 +161,6 @@ export default {
               'single': true
             });
             Vue.mapInstance.addLayer(clusterLayer);
-            console.log(Vue.mapInstance)
           });
     },
     //加载企业复工热力图

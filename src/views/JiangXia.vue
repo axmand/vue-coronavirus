@@ -21,15 +21,35 @@
            info : info
         },
         methods: {
-            getCoordinates(){
-                Vue.Center = [118,38];
-                // Vue.mapInstance.center = Vue.Center
-                this.$set(this.mapInstance,'center',Vue.Center)
+            getMylocation(){
+                Vue.mapInstance.setCenter([114.330506,30.358314])
+                Vue.mapInstance.setZoom(17)
+                if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(this.$options.methods.displayLocation,this.$options.methods.displayError);
+                }else{
+                    alert('no geolocation support');
+                }
+            },
+
+            displayLocation(position){
+                var lat=position.coords.latitude;
+                var lon=position.coords.longitude;
+                Vue.mapInstance.setCenter([num(lon),num(lat)])
+            },
+
+            displayError(error){
+                var errorTypes={
+                    0:'unknow error',
+                    1:'permission denied by user',
+                    2:'position is not avaliable',
+                    3:'request time out'
+                };
+                var errorMessage=errorTypes[error.code];
+                console.log(errorMessage);
             }
         },
         mounted () {
-            Vue.Center = [];
-            this.getCoordinates()
+            this.getMylocation()
         }
     }
 </script>
