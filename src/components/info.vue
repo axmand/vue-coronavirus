@@ -1,6 +1,6 @@
 <template>
     <div id="info">
-        <el-row id="row1">
+        <el-row id="row1" >
                 春晖西元 低风险
         </el-row>
             <el-divider></el-divider>
@@ -19,9 +19,6 @@
                 您当前附近范围疫情风险较低，请注意防护。
         </el-row>
             <el-divider></el-divider>
-        <el-row id="row4" style="color:#0000FF">
-                更多信息，点击上拉显示
-        </el-row>
     </div>
 </template>
  
@@ -49,8 +46,8 @@ export default {
   #info {
     bottom: 0%;
     width: 100%;
-    /* height: 20%; */
-    position: absolute;
+    height: 20%;
+    position: fixed;
     z-index: 2;
     background: #ffffff
   }
@@ -78,9 +75,12 @@ export default {
   #row3{
     opacity: 100%;
     width: 100%;
+    margin-bottom: 1%;
+        left:1%;
+    padding: 1%;
     display:table;
-    text-align: center;
-    padding-bottom: 2%;
+    text-align: left;
+    /* padding-bottom: 10%; */
     font-size: 0.8em
   }
   #row4{
