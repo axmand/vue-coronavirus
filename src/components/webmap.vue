@@ -111,6 +111,7 @@ export default {
     },
     //江夏聚点图
     markInfo2() {
+<<<<<<< HEAD
       fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
         let markers = []
         const testpoints = result.points;
@@ -163,6 +164,66 @@ export default {
         Vue.mapInstance.addLayer(clusterLayer);
         console.log(Vue.mapInstance)
       });
+=======
+        fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
+            let markers = []
+            var features = result.features;
+            for (var i = 0; i < features.length; i++){
+              var a = features[i];
+              markers.push(new maptalks.Marker(a.geometry.coordinates,{
+                  'id': i,
+                  'properties': {
+                    'address':  a.properties.address,
+                    'time': a.properties.time
+                  },
+                }));
+            }
+            console.log(markers)
+            let clusterLayer = new ClusterLayer('cluster2', markers, {
+              'noClusterWithOneMarker': false,
+              'maxClusterZoom': 18,
+              //"count" is an internal variable: marker count in the cluster.
+              'symbol': {
+                'markerType': 'ellipse',
+                'markerFill': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 'rgb(135, 196, 240)'],
+                    [9, '#1bbc9b'],
+                    [99, 'rgb(216, 115, 149)']
+                  ]
+                },
+                'markerFillOpacity': 0.7,
+                'markerLineOpacity': 1,
+                'markerLineWidth': 3,
+                'markerLineColor': '#fff',
+                'markerWidth': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 40],
+                    [9, 60],
+                    [99, 80]
+                  ]
+                },
+                'markerHeight': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 40],
+                    [9, 60],
+                    [99, 80]
+                  ]
+                }
+              },
+              'drawClusterText': true,
+              'geometryEvents': true,
+              'single': true
+            });
+            Vue.mapInstance.addLayer(clusterLayer);
+          });
+>>>>>>> 0805c663c74015a3f00d9b535aa3866dcc8ebb64
     },
     //加载企业复工热力图
     heatMapInfo(i) {

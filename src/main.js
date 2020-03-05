@@ -14,7 +14,6 @@ Vue.prototype.features = {};
 Vue.prototype.Patientfeatures = {};
 Vue.prototype.Allcount = {};
 Vue.prototype.Flag = 0;
-Vue.prototype.Center = [];
 
 const app = new Vue({
     router,
