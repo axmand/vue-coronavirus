@@ -102,6 +102,61 @@ export default {
         Vue.mapInstance.getLayer('cluster').hide()
       }
     },
+    //江夏聚点图
+    markInfo2() {
+        fetch("http://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+            let markers = []
+            const testpoints = result.points;
+            for (var i = 0; i < testpoints.length; i++){
+                  var a = testpoints[i];
+                  markers.push(new maptalks.Marker([a[1],a[0]]))
+            }
+            let clusterLayer = new ClusterLayer('cluster2', markers, {
+              'noClusterWithOneMarker': false,
+              'maxClusterZoom': 18,
+              //"count" is an internal variable: marker count in the cluster.
+              'symbol': {
+                'markerType': 'ellipse',
+                'markerFill': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 'rgb(135, 196, 240)'],
+                    [9, '#1bbc9b'],
+                    [99, 'rgb(216, 115, 149)']
+                  ]
+                },
+                'markerFillOpacity': 0.7,
+                'markerLineOpacity': 1,
+                'markerLineWidth': 3,
+                'markerLineColor': '#fff',
+                'markerWidth': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 40],
+                    [9, 60],
+                    [99, 80]
+                  ]
+                },
+                'markerHeight': {
+                  property: 'count',
+                  type: 'interval',
+                  stops: [
+                    [0, 40],
+                    [9, 60],
+                    [99, 80]
+                  ]
+                }
+              },
+              'drawClusterText': true,
+              'geometryEvents': true,
+              'single': true
+            });
+            Vue.mapInstance.addLayer(clusterLayer);
+            console.log(Vue.mapInstance)
+          });
+    },
     //加载企业复工热力图
     heatMapInfo(i) {
       if (i) {
@@ -152,7 +207,7 @@ export default {
               'filter': ['==', 'RISK', '低风险'],
               'symbol': {
                 'polygonFill': 'rgb(0,255,0)',
-                'polygonOpacity': 0.5,
+                'polygonOpacity': { stops: [[6, 0.5], [10, 0]] },
                 'lineColor': '#fff',
                 'lineWidth': 0.3
               }
@@ -161,7 +216,7 @@ export default {
               'filter': ['==', 'RISK', '中风险'],
               'symbol': {
                 'polygonFill': 'rgb(255,255,0)',
-                'polygonOpacity': 0.5,
+                'polygonOpacity': { stops: [[6, 0.5], [10, 0]] },
                 'lineColor': '#fff',
                 'lineWidth': 0.3
               }
@@ -170,7 +225,7 @@ export default {
               'filter': ['==', 'RISK', '高风险'],
               'symbol': {
                 'polygonFill': 'rgb(255,0,0)',
-                'polygonOpacity': 0.5,
+                'polygonOpacity': { stops: [[6, 0.5], [10, 0]] },
                 'lineColor': '#fff',
                 'lineWidth': 0.3
               }
@@ -423,7 +478,7 @@ export default {
     Vue.mapInstance = new maptalks.Map("WebMap", {
       center: [112.5, 31.1],
       zoom: 7,
-      // maxZoom:14,
+      //maxZoom:14,
       //minZoom:7,
       spatialReference: {
         projection: 'baidu'
@@ -440,8 +495,10 @@ export default {
       'subdomains': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       'attribution': '&copy; <a target="_blank" href="http://map.baidu.com">Baidu</a>'
     }));
+    this.markInfo2();
     this.polygon(true);
     this.boundary();
+
   },
 
   beforeCreate() { }, //生命周期 - 创建之前rk

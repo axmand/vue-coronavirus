@@ -1,9 +1,9 @@
 <template>
     <div id="jiangxia">
         <img id='img' src="./../assets/Banner.png" width="100%">
-        <img id='legend' src="./../assets/fengxian.png" style="display:block">
-        <p id="title">湖北省疫情综合风险分析系统</p>
+        <p id="title">江夏区疫情综合风险分析系统</p>
         <webmap ref="webmap"></webmap>
+        <info></info>
         <Drawer></Drawer>
     </div>
 </template>
@@ -12,11 +12,13 @@
     import Vue from 'vue';
     import Drawer from './../components/Drawer';
     import webmap from './../components/webmap';
+    import info from './../components/info';
     export default {
         name: 'jiangxia',
         components: {
            Drawer : Drawer,
-           webmap : webmap
+           webmap : webmap,
+           info : info
         },
         methods: {
             getCoordinates(){
@@ -33,14 +35,6 @@
 </script>
 
 <style>
-    #legend {
-        position: fixed;
-        height: 4em;
-        width: auto;
-        z-index: 2;
-        left: 3%;
-        bottom: 20%;
-    }
     #img {
         position: fixed;
         width: 100%;
