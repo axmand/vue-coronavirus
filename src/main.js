@@ -4,6 +4,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+//引入router
+import router from "./router";
 
 Vue.use(ElementUI)
 
@@ -14,5 +16,6 @@ Vue.prototype.Allcount = {};
 Vue.prototype.Flag = 0;
 
 const app = new Vue({
-    render:h=>h(App)
+    router,
+    render: h => h(App)
 }).$mount("#app");
