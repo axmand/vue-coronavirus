@@ -184,6 +184,9 @@ export default {
   padding: 0;
   list-style: none;
 }
+body {
+    overflow: hidden;
+}
 .layout {
   width: 100%;
   height: 100%;
