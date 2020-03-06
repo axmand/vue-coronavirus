@@ -55,7 +55,7 @@
                         Vue.mapInstance.setCenter([lng,lat])
                         // Vue.mapInstance.setCenter([114.319815,30.360594])  
                         var point = new maptalks.Marker(
-                            [114.319815,30.360594],
+                            [lng,lat],
                                 {
                                 visible : true,
                                 editable : true,
