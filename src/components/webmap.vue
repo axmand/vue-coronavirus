@@ -477,43 +477,32 @@ export default {
       }));
     },
 
-    //5公里内确诊人数
-    patient_5(lon, lat) {
-      var patient_5 = [];
-      var patient_5Layer = new maptalks.VectorLayer('patient_5');
-      const circle = new maptalks.Circle([lon, lat], 5000);
-      patient_5Layer.addGeometry(circle);
-      fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
-        const jxpatients = result.features;
-        for (var i = 0; i < jxpatients.length; i++) {
-          var contains_5 = circle.containsPoint(new maptalks.Point(jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]));
-          if (contains_5) {
-            patient_5.push(jxpatients[i]);
-          }
-        }
-      });
-      Vue.mapInstance.addLayer(patient_5Layer);
-      console.log(patient_5.length);
-      return patient_5.length;
-    },
-
     //3公里内确诊人数
     patient_3(lon, lat) {
-      var patient_3 = [];
+      var patient_3 =[];
       var patient_3Layer = new maptalks.VectorLayer('patient_3');
+      Vue.mapInstance.addLayer(patient_3Layer);
       const circle = new maptalks.Circle([lon, lat], 3000);
       patient_3Layer.addGeometry(circle);
       fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
         const jxpatients = result.features;
+        var jxmultiponits=[];
         for (var i = 0; i < jxpatients.length; i++) {
-          var contains_3 = circle.containsPoint(new maptalks.Point(jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]));
-          if (contains_3) {
-            patient_3.push(jxpatients[i]);
-          }
+          jxmultiponits.push(jxpatients[i].geometry.coordinates);
         }
-        Vue.mapInstance.addLayer(patient_3Layer);
-        console.log(patient_3.length);
-        return patient_3.length;
+        var r=new maptalks.MultiPoint(jxmultiponits);
+        patient_3Layer.addGeometry(r);
+        var jxpoints2=patient_3Layer.getGeometries();
+        //console.log(jxpoints2[1]._geometries.length);
+        for(var j=0;j<jxpoints2[1]._geometries.length;j++){
+          var contains_3=circle.containsPoint(jxpoints2[1]._geometries[j]._coordinates);
+          if(contains_3){
+            patient_3.push(jxpatients[j].properties);
+          }
+        }  
+        Vue.mapInstance.removeLayer('patient_3Layer') ;
+        //console.log(patient_3);
+        return patient_3;
       });
     },
 
@@ -576,8 +565,6 @@ export default {
     this.polygon(true);
     this.boundary();
     this.patient_3(114.319815, 30.360594);
-    // this.patient_5(114.3, 30.5);
-    // this.getAddress(116.017637, 37.957109);
 
   },
 
