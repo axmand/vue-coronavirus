@@ -15,15 +15,15 @@
       <div class="bottom-center">
         <ul class="number-list">
           <li class="number-list-item">
-            <div class="list-item-top">17</div>
+            <div class="list-item-top">{{totalData.confirm}}</div>
             <div class="list-item-bottom">累计确诊</div>
           </li>
           <li class="number-list-item">
-            <div class="list-item-top">0</div>
+            <div class="list-item-top">{{totalData.new}}</div>
             <div class="list-item-bottom">今日新增</div>
           </li>
           <li class="number-list-item">
-            <div class="list-item-top green">16</div>
+            <div class="list-item-top green">{{totalData.cure}}</div>
             <div class="list-item-bottom">累计治愈</div>
           </li>
         </ul>
@@ -79,6 +79,11 @@ export default {
   data() {
     return {
       isFull: false,
+      totalData: {
+        cure: 16,
+        confirm: 17,
+        new: 0
+      },
       filterList: ["全部", "药店", "商超", "酒店"],
       currentItem: "全部",
       listData: [
@@ -123,7 +128,7 @@ export default {
           phone: "110",
           time: "营业时间8:00 - 19:00",
           location: "枣阳路"
-        },
+        }
       ]
     };
   },
@@ -185,7 +190,7 @@ export default {
   list-style: none;
 }
 body {
-    overflow: hidden;
+  overflow: hidden;
 }
 .layout {
   width: 100%;
