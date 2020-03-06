@@ -36,8 +36,14 @@ export default {
     }
   },
   methods: {
+    update(){
+        var result = this.$parent.patient_3(114.319815, 30.360594)
+        console.log(result)
+    }
+    
   },
   mounted(){
+    this.update()
   }
 };
 </script>
