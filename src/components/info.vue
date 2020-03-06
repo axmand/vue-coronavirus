@@ -1,7 +1,9 @@
 <template>
     <div id="info">
         <el-row id="row1" >
-                {{item.address}} {{item.risk}}
+                <!--{{item.address}} {{item.risk}}-->
+                <span>{{item.address}}</span>
+                <span class="risk-level-1">{{item.risk}}</span>
         </el-row>
             <el-divider></el-divider>
         <el-row id="row2">
@@ -77,61 +79,90 @@ export default {
 
 <!-- 限定局部有效的样式 -->
 <style scoped>
-  #info {
-    bottom: 0%;
-    width: 100%;
-    height: 20%;
-    position: fixed;
-    z-index: 2;
-    background: #ffffff
-  }
-  #row1 {
-    opacity: 100%;
-    width: 100%;
-    left:1%;
-    padding: 1%;
-    padding-top: 3%;
-    font-size: 1em;
-    font-family:'微软雅黑';
-    font:bolder;
-  }
-  #row2{
-    opacity: 100%;
-    width: 100%;
-    left:1%;
-    display:table;
-    padding: 1%;
-    font-family:'黑体';
-    font:bolder;
-    padding-bottom: 2%;
-    font-size: 1em
-  }
-  #row3{
-    opacity: 100%;
-    width: 100%;
-    margin-bottom: 1%;
-        left:1%;
-    padding: 1%;
-    display:table;
-    text-align: left;
-    /* padding-bottom: 10%; */
-    font-size: 0.8em
-  }
-  #row4{
-    opacity: 100%;
-    width: 100%;
-    display:table;
-    text-align: center;
-    font-size: 0.7em;
-    bottom: 0%;
-  }
-  #num{
-      font: bolder;
-      font-size: 1.2em;
-      text-align:left;
-      /* width: 1.em */
-  }
-  .el-divider{
-      margin: 2%;
-  }
+/* @import "../assets/common/style.css"; */
+
+#info {
+  bottom: 0%;
+  width: 100%;
+  height: 25%;
+  position: fixed;
+  z-index: 2;
+  background: #f4f4f4;
+}
+#row1 {
+  opacity: 100%;
+  width: 100%;
+  left: 1%;
+  padding: 1%;
+  padding-top: 3%;
+  font-size: 1em;
+  font-family: "微软雅黑";
+  font: bolder;
+}
+
+#row2 {
+  opacity: 100%;
+  width: 100%;
+  left: 1%;
+  display: table;
+  padding: 1%;
+  font-family: "黑体";
+  font: bolder;
+  padding-bottom: 2%;
+  font-size: 1em;
+}
+#row3 {
+  font-size: 0.9em;
+  padding: 6px 20px;
+  margin: 0 10px;
+  display: inline-block;
+  border-radius: 4px;
+  background: #cfe0ff;
+  border: 1px solid #004acc;
+}
+
+.risk-level-1 {
+  background: #94e392;
+  display: inline-block;
+  color: #333333;
+  border-radius: 15px;
+  padding: 3px 15px;
+  font-size: 14px;
+  margin: 0 10px 0 10px;
+}
+.risk-level-2 {
+  background: #ffb502;
+  display: inline-block;
+  color: #333333;
+  border-radius: 15px;
+  padding: 3px 15px;
+  font-size: 14px;
+  margin: 0 10px 0 10px;
+}
+.risk-level-3 {
+  background: #db1717;
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 15px;
+  padding: 3px 15px;
+  font-size: 14px;
+  margin: 0 10px 0 10px;
+}
+#row4 {
+  opacity: 100%;
+  width: 100%;
+  display: table;
+  text-align: center;
+  font-size: 0.7em;
+  bottom: 0%;
+}
+#num {
+  font: bolder;
+  font-size: 1.2em;
+  text-align: left;
+  /* width: 1.em */
+}
+.el-divider {
+  margin: 2%;
+}
 </style>

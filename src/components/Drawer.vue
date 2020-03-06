@@ -11,7 +11,9 @@
         size="90%">
         <div id='drawer-content'>
             <el-row id="row1">
-                    {{item.address}} {{item.risk}}
+                <!--{{item.address}} {{item.risk}}-->
+                <span>{{item.address}}</span>
+                <span class="risk-level-1">{{item.risk}}</span>
             <el-button @click="drawer = false" id="false" icon='el-icon-close' style="float:right;border:0px"></el-button>
             </el-row>
                 <el-divider></el-divider>
@@ -85,74 +87,102 @@
 
 <!-- 限定局部有效的样式 -->
 <style scoped>
-  #Drawer {
-    /* position: fixed;*/
-    width: 100%; 
-  }
-  #bottom{
-    position: fixed;
-    padding-bottom: 1%;
-    padding-top: 1%;
-    padding-right: 0%;
-    padding-left: 0%;
-    /* size : 1.5em; */
-    z-index:2;
-    width: 100%;
-    bottom: 0%;
-  }
-  #false{
-    margin-right: 2%;
-    /* right: 1%; */
-    padding: 1%;
-  }
-   #row1 {
-    opacity: 100%;
-    width: 100%;
-    left:1%;
-    padding: 1%;
-    padding-top: 3%;
-    font-size: 1em;
-    font-family:'微软雅黑';
-    font:bolder;
-  }
-  #row2{
-    opacity: 100%;
-    width: 100%;
-    left:1%;
-    display:table;
-    padding: 1%;
-    font-family:'黑体';
-    font:bolder;
-    padding-bottom: 2%;
-    font-size: 1em
-  }
-  #row3{
-    opacity: 100%;
-    width: 100%;
-    display:table;
-    text-align: center;
-    padding-bottom: 2%;
-    font-size: 0.8em
-  }
-  #row4{
-    opacity: 100%;
-    width: 100%;
-    display:table;
-    text-align: center;
-    font-size: 0.7em;
-    bottom: 0%;
-  }
-  #num{
-      font: bolder;
-      font-size: 1.2em;
-      text-align:left;
-      /* width: 1.em */
-  }
-  .el-divider{
-      margin: 2%;
-  }
-  #drawer-content{
-    height:99.5%;
-    overflow:auto;
-  }
+#Drawer {
+  /* position: fixed;*/
+  width: 100%;
+}
+#bottom {
+  position: fixed;
+  padding-bottom: 1%;
+  padding-top: 1%;
+  padding-right: 0%;
+  padding-left: 0%;
+  /* size : 1.5em; */
+  z-index: 2;
+  width: 100%;
+  bottom: 0%;
+}
+#false {
+  margin-right: 2%;
+  /* right: 1%; */
+  padding: 1%;
+}
+#row1 {
+  opacity: 100%;
+  width: 100%;
+  left: 1%;
+  padding: 1%;
+  padding-top: 3%;
+  font-size: 1em;
+  font-family: "微软雅黑";
+  font: bolder;
+}
+.risk-level-1{
+  background: #94e392;
+  display: inline-block;
+  color: #333333;
+  border-radius: 15px;
+  padding: 3px 15px;
+  font-size: 14px;
+  margin:0 10px 0 10px;
+}
+.risk-level-2{
+  background: #ffb502;
+  display: inline-block;
+  color: #333333;
+  border-radius: 15px;
+  padding: 3px 15px;
+  font-size: 14px;
+  margin:0 10px 0 10px;
+}
+.risk-level-3{
+  background: #db1717;
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 15px;
+  padding: 3px 15px;
+  font-size: 14px;
+  margin:0 10px 0 10px;
+}
+#row2 {
+  opacity: 100%;
+  width: 100%;
+  left: 1%;
+  display: table;
+  padding: 1%;
+  font-family: "黑体";
+  font: bolder;
+  padding-bottom: 2%;
+  font-size: 1em;
+}
+#row3 {
+  font-size: 0.9em;
+  padding: 6px 20px;
+  margin: 0 10px;
+  display: inline-block;
+  border-radius: 4px;
+  background: #cfe0ff;
+  border:1px solid #004acc;
+}
+#row4 {
+  opacity: 100%;
+  width: 100%;
+  display: table;
+  text-align: center;
+  font-size: 0.7em;
+  bottom: 0%;
+}
+#num {
+  font: bolder;
+  font-size: 1.2em;
+  text-align: left;
+  /* width: 1.em */
+}
+.el-divider {
+  margin: 2%;
+}
+#drawer-content {
+  height: 99.5%;
+  overflow: auto;
+}
 </style>
