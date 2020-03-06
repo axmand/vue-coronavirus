@@ -33,6 +33,11 @@
         },
 
         methods: {    
+            patient(lon,lat) {
+                console.log(lon)
+                console.log(lat)
+                this.$refs.webmap.patient_3(lon,lat);
+            }
         },
 
         mounted () {
@@ -52,10 +57,10 @@
                             Vue.Address = addComp.street + addComp.streetNumber   
                             console.log(Vue.Address) 
                         });  
-                        Vue.mapInstance.setCenter([lng,lat])
-                        // Vue.mapInstance.setCenter([114.319815,30.360594])  
+                        // Vue.mapInstance.setCenter([lng,lat])
+                        Vue.mapInstance.setCenter([114.319815,30.360594])  
                         var point = new maptalks.Marker(
-                            [lng,lat],
+                            [114.319815,30.360594],
                                 {
                                 visible : true,
                                 editable : true,

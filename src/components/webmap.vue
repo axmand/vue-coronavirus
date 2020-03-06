@@ -501,7 +501,7 @@ export default {
           }
         }  
         Vue.mapInstance.removeLayer('patient_3Layer') ;
-        //console.log(patient_3);
+        // console.log(patient_3);
         return patient_3;
       });
     },

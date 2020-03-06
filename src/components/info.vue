@@ -2,8 +2,8 @@
     <div id="info">
         <el-row id="row1" >
                 <!--{{item.address}} {{item.risk}}-->
-                <span>{{item.address&&item.address.toString()}}</span>
-                <span class="risk-level-1">{{item.risk}}</span>
+                <span>江夏第四中学</span>
+                <span class="risk-level-3">高等级</span>
         </el-row>
             <el-divider></el-divider>
         <el-row id="row2">
@@ -11,7 +11,7 @@
                 附近累计确诊：
             </span>
             <span id="num" style="color:red">
-                {{item.number}}
+                558
             </span>
             <span>
                 人
@@ -46,8 +46,7 @@ export default {
       }
   },
   mounted () {
-    Vue.Address = '1111' ;
-    this.update()
+      this.update()
   },
 }
 </script>
