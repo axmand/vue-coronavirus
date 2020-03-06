@@ -479,22 +479,31 @@ export default {
 
     //3公里内确诊人数
     patient_3(lon, lat) {
-      var patient_3 = [];
+      var patient_3 =[];
       var patient_3Layer = new maptalks.VectorLayer('patient_3');
+      Vue.mapInstance.addLayer(patient_3Layer);
       const circle = new maptalks.Circle([lon, lat], 3000);
       patient_3Layer.addGeometry(circle);
       fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
         const jxpatients = result.features;
+        var jxmultiponits=[];
         for (var i = 0; i < jxpatients.length; i++) {
-          var marker = new maptalks.Marker([jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]])
-          patient_3Layer.addGeometry(marker);}
-          Vue.mapInstance.addLayer(patient_3Layer);
-          console.log(Vue.mapInstance)
-          console.log(vue)
+          jxmultiponits.push(jxpatients[i].geometry.coordinates);
+        }
+        var r=new maptalks.MultiPoint(jxmultiponits);
+        patient_3Layer.addGeometry(r);
+        var jxpoints2=patient_3Layer.getGeometries();
+        //console.log(jxpoints2[1]._geometries.length);
+        for(var j=0;j<jxpoints2[1]._geometries.length;j++){
+          var contains_3=circle.containsPoint(jxpoints2[1]._geometries[j]._coordinates);
+          if(contains_3){
+            patient_3.push(jxpatients[j].properties);
+          }
+        }  
+        Vue.mapInstance.removeLayer('patient_3Layer') ;
+        //console.log(patient_3);
+        return patient_3;
       });
-      // Vue.mapInstance.addLayer(patient_3Layer);
-      console.log(patient_3);
-      return patient_3.length;
     },
 
   },
@@ -525,9 +534,8 @@ export default {
     this.markInfo2();
     this.polygon(true);
     this.boundary();
-    this.patient_3(114.319815,30.360594);
-    // this.patient_5(114.3, 30.5);
-    // this.getAddress(116.017637, 37.957109);
+    // this.patient_3(114.319815, 30.360594);
+
   },
 
   beforeCreate() { }, //生命周期 - 创建之前rk
