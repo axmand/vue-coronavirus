@@ -54,31 +54,7 @@
     methods: {
     },
     mounted () {
-        // this.$nextTick(() => {
-        //   const _this = this
-        //   var addComp = {}
-        //   var address = ''
-        //   MP(_this.ak).then(BMap => {
-        //   var geolocation = new BMap.Geolocation();
-        //   var gc = new BMap.Geocoder()
-        //   geolocation.enableSDKLocation();
-        //   geolocation.getCurrentPosition(function(r) {
-        //       if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-        //           var lng = r.point.lng;
-        //           var lat = r.point.lat
-        //           console.log(r)
-        //           //获取地址信息
-        //           gc.getLocation(r.point, function(rs){    
-        //               var addComp = rs.addressComponents;
-        //               var address = addComp.street + addComp.streetNumber;    
-        //           });  
-        //       } else {
-        //           alert('failed' + this.getStatus());
-        //       }
-        //   });
-        //   })
-        //   this.$set(this.item,'address',address)
-        // })
+      this.$forceUpdate()
     }
     }
 </script>

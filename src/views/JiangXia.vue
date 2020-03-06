@@ -39,91 +39,63 @@
         },
 
         methods: {    
-            // getMylocation(){
-            //     Vue.mapInstance.setCenter([114.319815,30.360594])  
-            //     var point = new maptalks.Marker(
-            //         [114.319815,30.360594],
-            //             {
-            //             visible : true,
-            //             editable : true,
-            //             cursor : 'pointer',
-            //             shadowBlur : 0,
-            //             shadowColor : 'black',
-            //             draggable : false,
-            //             dragShadow : false, // display a shadow during dragging
-            //             drawOnAxis : null,  // force dragging stick on a axis, can be: x, y
-            //             symbol : {
-            //                 'markerType': 'ellipse',
-            //                 'markerWidth': 20,
-            //                 'markerHeight': 20,
-            //                 'markerFill': '#00CCFF',
-            //                 'markOpacity': 0.3,
-            //                 'lineColor': '#000',
-            //                 'lineWidth': 0.1
-            //             },
-            //         }
-            //     )
-            //     new maptalks.VectorLayer('jx', point).addTo(Vue.mapInstance); 
-            // }
+            update(){
+                this.$refs.info.item.address = Vue.Address;
+                this.$refs.Drawer.item.address = Vue.Address;
+            }
         },
 
         mounted () {
             Vue.Address = '' ;
-            this.$nextTick(() => {
-                const _this = this
-                MP(_this.ak).then(BMap => {
-                    var geolocation = new BMap.Geolocation();
-                    var gc = new BMap.Geocoder()
-                    geolocation.enableSDKLocation();
-                    geolocation.getCurrentPosition(function(r) {
-                        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                            var lng = r.point.lng;
-                            var lat = r.point.lat
-                            console.log(r)
-                            //获取地址信息
-                            gc.getLocation(r.point, function(rs){    
-                                var addComp = rs.addressComponents;
-                                Vue.Address = addComp.street + addComp.streetNumber   
-                                console.log(Vue.Address) 
-                            });  
-                            // Vue.mapInstance.setCenter([lng,lat])
-                            Vue.mapInstance.setCenter([114.319815,30.360594])  
-                            var point = new maptalks.Marker(
-                                [114.319815,30.360594],
-                                    {
-                                    visible : true,
-                                    editable : true,
-                                    cursor : 'pointer',
-                                    shadowBlur : 0,
-                                    shadowColor : 'black',
-                                    draggable : false,
-                                    dragShadow : false, // display a shadow during dragging
-                                    drawOnAxis : null,  // force dragging stick on a axis, can be: x, y
-                                    symbol : {
-                                        'markerType': 'ellipse',
-                                        'markerWidth': 20,
-                                        'markerHeight': 20,
-                                        'markerFill': '#00CCFF',
-                                        'markOpacity': 0.3,
-                                        'lineColor': '#000',
-                                        'lineWidth': 0.1
-                                    },
-                                }
-                            )
-                            new maptalks.VectorLayer('jx', point).addTo(Vue.mapInstance); 
-                        } else {
-                            alert('failed' + this.getStatus());
-                        }
-                    });
-                })
-                this.$refs.info.item.address = Vue.Address;
-                this.$refs.Drawer.item.address = Vue.Address;
+            const _this = this
+            MP(_this.ak).then(BMap => {
+                var geolocation = new BMap.Geolocation();
+                var gc = new BMap.Geocoder()
+                geolocation.enableSDKLocation();
+                geolocation.getCurrentPosition(function(r) {
+                    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                        var lng = r.point.lng;
+                        var lat = r.point.lat
+                        console.log(r)
+                        //获取地址信息
+                        gc.getLocation(r.point, function(rs){    
+                            var addComp = rs.addressComponents;
+                            Vue.Address = addComp.street + addComp.streetNumber   
+                            console.log(Vue.Address) 
+                        });  
+                        // Vue.mapInstance.setCenter([lng,lat])
+                        Vue.mapInstance.setCenter([114.319815,30.360594])  
+                        var point = new maptalks.Marker(
+                            [114.319815,30.360594],
+                                {
+                                visible : true,
+                                editable : true,
+                                cursor : 'pointer',
+                                shadowBlur : 0,
+                                shadowColor : 'black',
+                                draggable : false,
+                                dragShadow : false, // display a shadow during dragging
+                                drawOnAxis : null,  // force dragging stick on a axis, can be: x, y
+                                symbol : {
+                                    'markerType': 'ellipse',
+                                    'markerWidth': 20,
+                                    'markerHeight': 20,
+                                    'markerFill': '#00CCFF',
+                                    'markOpacity': 0.3,
+                                    'lineColor': '#000',
+                                    'lineWidth': 0.1
+                                },
+                            }
+                        )
+                        new maptalks.VectorLayer('jx', point).addTo(Vue.mapInstance); 
+                    } else {
+                        alert('failed' + this.getStatus());
+                    }
+                });
             })
+            this.update()
+
         },
-
-        watch(){
-
-        }
         
     }
 </script>
