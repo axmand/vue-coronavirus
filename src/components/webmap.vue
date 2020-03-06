@@ -477,26 +477,6 @@ export default {
       }));
     },
 
-    //5公里内确诊人数
-    patient_5(lon, lat) {
-      var patient_5 = [];
-      var patient_5Layer = new maptalks.VectorLayer('patient_5');
-      const circle = new maptalks.Circle([lon, lat], 5000);
-      patient_5Layer.addGeometry(circle);
-      fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
-        const jxpatients = result.features;
-        for (var i = 0; i < jxpatients.length; i++) {
-          var contains_5 = circle.containsPoint(new maptalks.Point(jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]));
-          if (contains_5) {
-            patient_5.push(jxpatients[i]);
-          }
-        }
-      });
-      Vue.mapInstance.addLayer(patient_5Layer);
-      console.log(patient_5.length);
-      return patient_5.length;
-    },
-
     //3公里内确诊人数
     patient_3(lon, lat) {
       var patient_3 = [];
@@ -506,49 +486,17 @@ export default {
       fetch("http://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
         const jxpatients = result.features;
         for (var i = 0; i < jxpatients.length; i++) {
-          var contains_3 = circle.containsPoint(new maptalks.Point(jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]));
-          // console.log(new maptalks.Point(400,300));
-          //var contains_3 = circle.containsPoint(new maptalks.Point(400,300));
-          if (contains_3) {
-            patient_3.push(jxpatients[i]);
-          }
-        }
+          var marker = new maptalks.Marker([jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]])
+          patient_3Layer.addGeometry(marker);}
+          Vue.mapInstance.addLayer(patient_3Layer);
+          console.log(Vue.mapInstance)
+          console.log(vue)
       });
-      Vue.mapInstance.addLayer(patient_3Layer);
-      console.log(patient_3.length);
+      // Vue.mapInstance.addLayer(patient_3Layer);
+      console.log(patient_3);
       return patient_3.length;
     },
 
-    //百度API定位：获取当前位置
-    getPositon() {
-      var geolocation = new BMap.Geolocation();
-      geolocation.getCurrentPosition(function(r) {
-        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-          mk = new BMap.Marker(r.point);
-          return r.point;
-          //getAddress(r.point);
-        } else {
-          alert('failed' + this.getStatus());
-          return '';
-        }
-      });
-    },
-
-    //通过坐标获取地名
-    getAddress(lon, lat) {
-      //var map = new BMap.Map("allmap");
-      //var point = new BMap.Point(116.017637, 37.957109);
-      var point = new BMap.Point(lon, lat);
-      var gc = new BMap.Geocoder();
-      gc.getLocation(point, function(rs) {
-        alert(rs.sematic_description);
-        var addComp = rs.addressComponents;
-        var mapAddress = addComp.province + addComp.city + addComp.district
-          + addComp.street + addComp.streetNumber;
-      });
-      console.log(mapAddress);
-      return mapAddress;
-    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() { },
@@ -577,10 +525,9 @@ export default {
     this.markInfo2();
     this.polygon(true);
     this.boundary();
-    // this.patient_3(114.330506,30.358314);
+    this.patient_3(114.319815,30.360594);
     // this.patient_5(114.3, 30.5);
     // this.getAddress(116.017637, 37.957109);
-
   },
 
   beforeCreate() { }, //生命周期 - 创建之前rk

@@ -84,7 +84,7 @@ export default {
               this.$set(this.item,'death',Vue.Allcount.ALLDEATH)
               this.$set(this.item,'reheal',Vue.Allcount.ALLREHEAL)
               this.$set(this.item,'date',currentdate)
-            });
+          });
     }
   },
   mounted () {

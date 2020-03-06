@@ -1,7 +1,7 @@
 <template>
     <div id="info">
         <el-row id="row1" >
-                春晖西苑 低风险
+                {{item.address}} {{item.risk}}
         </el-row>
             <el-divider></el-divider>
         <el-row id="row2">
@@ -9,7 +9,7 @@
                 附近累计确诊：
             </span>
             <span id="num" style="color:red">
-                3
+                {{item.number}}
             </span>
             <span>
                 人
@@ -26,7 +26,7 @@
 
 <script>
 import Vue from 'vue';
-
+import { MP } from './map.js'
 export default {
   name: 'info',
 
@@ -37,8 +37,40 @@ export default {
     }
   },
   methods: {
+        updatedata(){
+          var address = Vue.Address
+          console.log(address)
+          this.$set(this.item,'address',address)
+        }
   },
   mounted () {
+        this.updatedata()
+      // this.$nextTick(() => {
+      //     const _this = this
+      //     var addComp = {}
+      //     var address = ''
+      //     MP(_this.ak).then(BMap => {
+      //     var geolocation = new BMap.Geolocation();
+      //     var gc = new BMap.Geocoder()
+      //     geolocation.enableSDKLocation();
+      //     geolocation.getCurrentPosition(function(r) {
+      //         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+      //             var lng = r.point.lng;
+      //             var lat = r.point.lat
+      //             console.log(r)
+      //             //获取地址信息
+      //             gc.getLocation(r.point, function(rs){    
+      //                 var addComp = rs.addressComponents;
+      //                 var address = addComp.street + addComp.streetNumber;   
+      //                 console.log(address) 
+      //             });  
+      //         } else {
+      //             alert('failed' + this.getStatus());
+      //         }
+      //     });
+      //     })
+      //     this.$set(this.item,'address',address)
+      // })
   },
 }
 </script>

@@ -3,8 +3,8 @@
         <img id='img' src="./../assets/Banner.png" width="100%">
         <p id="title">江夏区疫情综合风险分析系统</p>
         <webmap ref="webmap"></webmap>
-        <info></info>
-        <Drawer></Drawer>
+        <info ref='info'></info>
+        <Drawer ref='Drawer'></Drawer>
     </div>
 </template>
 
@@ -27,60 +27,102 @@
            info : info
         },
 
+        computed:{
+            getaddress(){
+                return this.$store.state.address
+            }
+        },
+
         data(){
             return{
             }
         },
 
         methods: {    
-            getMylocation(){
-                Vue.mapInstance.setCenter([114.319815,30.360594])  
-                var point = new maptalks.Marker(
-                    [114.319815,30.360594],
-                        {
-                        visible : true,
-                        editable : true,
-                        cursor : 'pointer',
-                        shadowBlur : 0,
-                        shadowColor : 'black',
-                        draggable : false,
-                        dragShadow : false, // display a shadow during dragging
-                        drawOnAxis : null,  // force dragging stick on a axis, can be: x, y
-                        symbol : {
-                            'markerType': 'ellipse',
-                            'markerWidth': 20,
-                            'markerHeight': 20,
-                            'markerFill': '#00CCFF',
-                            'markOpacity': 0.3,
-                            'lineColor': '#000',
-                            'lineWidth': 0.1
-                        },
-                    }
-                )
-                new maptalks.VectorLayer('jx', point).addTo(Vue.mapInstance); 
-            }
+            // getMylocation(){
+            //     Vue.mapInstance.setCenter([114.319815,30.360594])  
+            //     var point = new maptalks.Marker(
+            //         [114.319815,30.360594],
+            //             {
+            //             visible : true,
+            //             editable : true,
+            //             cursor : 'pointer',
+            //             shadowBlur : 0,
+            //             shadowColor : 'black',
+            //             draggable : false,
+            //             dragShadow : false, // display a shadow during dragging
+            //             drawOnAxis : null,  // force dragging stick on a axis, can be: x, y
+            //             symbol : {
+            //                 'markerType': 'ellipse',
+            //                 'markerWidth': 20,
+            //                 'markerHeight': 20,
+            //                 'markerFill': '#00CCFF',
+            //                 'markOpacity': 0.3,
+            //                 'lineColor': '#000',
+            //                 'lineWidth': 0.1
+            //             },
+            //         }
+            //     )
+            //     new maptalks.VectorLayer('jx', point).addTo(Vue.mapInstance); 
+            // }
         },
 
         mounted () {
+            Vue.Address = '' ;
             this.$nextTick(() => {
                 const _this = this
                 MP(_this.ak).then(BMap => {
                     var geolocation = new BMap.Geolocation();
+                    var gc = new BMap.Geocoder()
                     geolocation.enableSDKLocation();
                     geolocation.getCurrentPosition(function(r) {
                         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-                            console.log(r);
                             var lng = r.point.lng;
                             var lat = r.point.lat
-                            Vue.mapInstance.setCenter([lng,lat])
-                            // Vue.mapInstance.setZoom(17)
-                             alert(lng,lat);
+                            console.log(r)
+                            //获取地址信息
+                            gc.getLocation(r.point, function(rs){    
+                                var addComp = rs.addressComponents;
+                                Vue.Address = addComp.street + addComp.streetNumber   
+                                console.log(Vue.Address) 
+                            });  
+                            // Vue.mapInstance.setCenter([lng,lat])
+                            Vue.mapInstance.setCenter([114.319815,30.360594])  
+                            var point = new maptalks.Marker(
+                                [114.319815,30.360594],
+                                    {
+                                    visible : true,
+                                    editable : true,
+                                    cursor : 'pointer',
+                                    shadowBlur : 0,
+                                    shadowColor : 'black',
+                                    draggable : false,
+                                    dragShadow : false, // display a shadow during dragging
+                                    drawOnAxis : null,  // force dragging stick on a axis, can be: x, y
+                                    symbol : {
+                                        'markerType': 'ellipse',
+                                        'markerWidth': 20,
+                                        'markerHeight': 20,
+                                        'markerFill': '#00CCFF',
+                                        'markOpacity': 0.3,
+                                        'lineColor': '#000',
+                                        'lineWidth': 0.1
+                                    },
+                                }
+                            )
+                            new maptalks.VectorLayer('jx', point).addTo(Vue.mapInstance); 
                         } else {
                             alert('failed' + this.getStatus());
                         }
                     });
                 })
+                this.$refs.info.item.address = Vue.Address;
+                this.$refs.Drawer.item.address = Vue.Address;
             })
+        },
+
+        watch(){
+
         }
         
     }

@@ -2,13 +2,12 @@
   <div id='Selfform'>
   <div class="meg" v-for="(item,index) in viewArr" v-bind:key="index">
     <el-card class="box-card">
-        <el-col :span='2' class="index">
+        <el-col :span='3' class="index">
             {{ index + 1 }}
         </el-col>
-        <!-- <el-col :span='3' class='line'>
-            <el-divider direction="vertical"></el-divider>
-        </el-col> -->
-        <el-col :span='2' class="content">
+        <el-col :span='3' class='line'>
+        </el-col>
+        <el-col :span='3' class="content">
           <div class='address'>
             <i class="el-icon-location-information" style="font-size: 0.5em"></i>
             地址 ：{{item.name}}
@@ -62,8 +61,8 @@ export default {
 }
 .line{
   margin: 0%;
-  border: 0%;
-  width: 4%;
+  border-left: 1%;
+  width: 0%;
 }
 .content{
   font-family: '宋体';
