@@ -1,55 +1,44 @@
 <template>
-    <div id="info">
-        <el-row id="row1" >
-                <!--{{item.address}} {{item.risk}}-->
-                <span>{{item.address&&item.address.toString()}}</span>
-                <span class="risk-level-1">{{item.risk}}</span>
-        </el-row>
-            <el-divider></el-divider>
-        <el-row id="row2">
-            <span>
-                附近累计确诊：
-            </span>
-            <span id="num" style="color:red">
-                {{item.number}}
-            </span>
-            <span>
-                人
-            </span>
-        </el-row>
-        <el-row id="row3">
-                您当前附近范围疫情风险较低，请注意防护。
-        </el-row>
-            <el-divider></el-divider>
-    </div>
-</template>
- 
- 
-
+  <div id="info">
+    <el-row id="row1">
+      <!--{{item.address}} {{item.risk}}-->
+      <span>{{item.address&&item.address.toString()}}</span>
+      <span class="risk-level-1">{{item.risk}}</span>
+    </el-row>
+    <el-divider></el-divider>
+    <el-row id="row2">
+      <span>附近累计确诊：</span>
+      <span id="num" style="color:red">{{item.number}}</span>
+      <span>人</span>
+    </el-row>
+    <el-row id="row3">您当前附近范围疫情风险较低，请注意防护。</el-row>
+    <el-divider></el-divider>
+  </div>
+</template> 
 <script>
-import Vue from 'vue';
-import { MP } from './map.js'
+import Vue from "vue";
+import { MP } from "./map.js";
 export default {
-  name: 'info',
+  name: "info",
 
   data() {
-    return{
-        item:{
-          'address':Vue.address||0
-        }
-    }
+    return {
+      item: {
+        address: Vue.address || 0
+      }
+    };
   },
   methods: {
-     update(){
-          console.log('1'+Vue.address)
-          this.$set(this.item,'address',Vue.address)
-      }
+    update() {
+      console.log("1" + Vue.address);
+      this.$set(this.item, "address", Vue.address);
+    }
   },
-  mounted () {
-    Vue.Address = '1111' ;
-    this.update()
-  },
-}
+  mounted() {
+    Vue.Address = "1111";
+    this.update();
+  }
+};
 </script>
 
 <!-- 限定局部有效的样式 -->
