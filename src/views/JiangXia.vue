@@ -74,6 +74,7 @@
                             var lat = r.point.lat
                             Vue.mapInstance.setCenter([lng,lat])
                             // Vue.mapInstance.setZoom(17)
+                             alert(lng,lat);
                         } else {
                             alert('failed' + this.getStatus());
                         }
