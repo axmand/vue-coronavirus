@@ -8,8 +8,8 @@
         direction="btt"
         :visible.sync="drawer"
         :with-header="false"
-        size="80%">
-        <div>
+        size="90%">
+        <div id='drawer-content'>
             <el-row id="row1">
                     春晖西元 低风险
             <el-button @click="drawer = false" id="false" icon='el-icon-close' style="float:right;border:0px"></el-button>
@@ -30,14 +30,19 @@
                     您当前附近范围疫情风险较低，请注意防护。
             </el-row>
             <el-divider></el-divider>
+            <Selfform></Selfform>
         </div>
         </el-drawer>
     </div>
 </template>
 
 <script>
+    import Selfform from './Selfform'
     export default {
     name: 'Drawer',
+    components: {
+      Selfform: Selfform
+    },
     data() {
         return {
             drawer: false,
@@ -118,5 +123,8 @@
   .el-divider{
       margin: 2%;
   }
-
+  #drawer-content{
+    height:99.5%;
+    overflow:auto;
+  }
 </style>

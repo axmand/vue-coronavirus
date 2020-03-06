@@ -10,6 +10,9 @@
 
 <script>
     import Vue from 'vue';
+    import * as maptalks from 'maptalks';
+    import 'maptalks/dist/maptalks.css';
+
     import Drawer from './../components/Drawer';
     import webmap from './../components/webmap';
     import info from './../components/info';
@@ -31,62 +34,54 @@
 
         methods: {    
             getMylocation(){
-                Vue.mapInstance.setCenter([113.69801525292405,34.79696180530942])   
-                if(navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(this.$options.methods.displayLocation(),this.$options.methods.displayError());
-                }else{
-                    alert('no geolocation support');
-                }
-            },
-
-            displayLocation(position){
-                var lat=position.coords.latitude;
-                var lon=position.coords.longitude;
-                Vue.mapInstance.setCenter([lon,lat])
-                console.log(lat,lon)
-            },
-
-            displayError(error){
-                var errorTypes={
-                    0:'unknow error',
-                    1:'permission denied by user',
-                    2:'position is not avaliable',
-                    3:'request time out'
-                };
-                var errorMessage=errorTypes[error.code];
-                console.log(errorMessage)
-            }    
+                Vue.mapInstance.setCenter([114.319815,30.360594])  
+                var point = new maptalks.Marker(
+                    [114.319815,30.360594],
+                        {
+                        visible : true,
+                        editable : true,
+                        cursor : 'pointer',
+                        shadowBlur : 0,
+                        shadowColor : 'black',
+                        draggable : false,
+                        dragShadow : false, // display a shadow during dragging
+                        drawOnAxis : null,  // force dragging stick on a axis, can be: x, y
+                        symbol : {
+                            'markerType': 'ellipse',
+                            'markerWidth': 20,
+                            'markerHeight': 20,
+                            'markerFill': '#00CCFF',
+                            'markOpacity': 0.3,
+                            'lineColor': '#000',
+                            'lineWidth': 0.1
+                        },
+                    }
+                )
+                new maptalks.VectorLayer('jx', point).addTo(Vue.mapInstance); 
+            }
         },
+
         mounted () {
-            // this.$nextTick(() => {
-            //     const _this = this
-            //     MP(_this.ak).then(BMap => {
-            //         var geolocation = new BMap.Geolocation();
-            //         geolocation.enableSDKLocation();
-            //         geolocation.getCurrentPosition(function(r) {
-            //             if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-            //                 console.log(r);
-            //                 var lng = r.point.lng;
-            //                 var lat = r.point.lat
-            //                 Vue.mapInstance.setCenter([lng,lat])
-            //                 // Vue.mapInstance.setZoom(17)
-            //             } else {
-            //                 alert('failed' + this.getStatus());
-            //             }
-            //         });
-            //     })
-            // })
-            // navigator.geolocation.getCurrentPosition(
-            //     function(position) {
-            //           console.log(position.coords.longitude)
-            //           console.log(position.coords.latitude)
-            //     },
-            //     function(error){
-            //           console.log(error)
-            //     }
-            // )
-            this.getMylocation()
+            this.$nextTick(() => {
+                const _this = this
+                MP(_this.ak).then(BMap => {
+                    var geolocation = new BMap.Geolocation();
+                    geolocation.enableSDKLocation();
+                    geolocation.getCurrentPosition(function(r) {
+                        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                            console.log(r);
+                            var lng = r.point.lng;
+                            var lat = r.point.lat
+                            Vue.mapInstance.setCenter([lng,lat])
+                            // Vue.mapInstance.setZoom(17)
+                        } else {
+                            alert('failed' + this.getStatus());
+                        }
+                    });
+                })
+            })
         }
+        
     }
 </script>
 

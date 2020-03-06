@@ -26,8 +26,10 @@
 
 <script>
 import Vue from 'vue';
+
 export default {
   name: 'info',
+
   data() {
     return{
       item:{

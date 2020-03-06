@@ -559,8 +559,6 @@ export default {
       center: [112.5, 31.1],
       // zoom: 7,
       zoom: 17,
-      //maxZoom:14,
-      //minZoom:7,
       spatialReference: {
         projection: 'baidu'
       },
