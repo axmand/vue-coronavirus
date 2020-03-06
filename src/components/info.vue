@@ -8,7 +8,7 @@
             <el-divider></el-divider>
         <el-row id="row2">
             <span>
-                附近累计确诊：
+                3公里内累计确诊：
             </span>
             <span id="num" style="color:red">
                 558
@@ -18,7 +18,7 @@
             </span>
         </el-row>
         <el-row id="row3">
-                您当前附近范围疫情风险较低，请注意防护。
+                您当前附近范围疫情风险较高，请注意防护。
         </el-row>
             <el-divider></el-divider>
     </div>
