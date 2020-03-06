@@ -27,26 +27,15 @@
            info : info
         },
 
-        computed:{
-            getaddress(){
-                return this.$store.state.address
-            }
-        },
-
         data(){
             return{
             }
         },
 
         methods: {    
-            update(){
-                this.$refs.info.item.address = Vue.Address;
-                this.$refs.Drawer.item.address = Vue.Address;
-            }
         },
 
         mounted () {
-            Vue.Address = '' ;
             const _this = this
             MP(_this.ak).then(BMap => {
                 var geolocation = new BMap.Geolocation();
@@ -63,8 +52,8 @@
                             Vue.Address = addComp.street + addComp.streetNumber   
                             console.log(Vue.Address) 
                         });  
-                        // Vue.mapInstance.setCenter([lng,lat])
-                        Vue.mapInstance.setCenter([114.319815,30.360594])  
+                        Vue.mapInstance.setCenter([lng,lat])
+                        // Vue.mapInstance.setCenter([114.319815,30.360594])  
                         var point = new maptalks.Marker(
                             [114.319815,30.360594],
                                 {
@@ -93,8 +82,6 @@
                     }
                 });
             })
-            this.update()
-
         },
         
     }

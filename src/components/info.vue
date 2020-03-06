@@ -1,8 +1,8 @@
 <template>
-    <div id="info" v-if="reFresh">
+    <div id="info">
         <el-row id="row1" >
                 <!--{{item.address}} {{item.risk}}-->
-                <span>{{item.address}}</span>
+                <span>{{item.address&&item.address.toString()}}</span>
                 <span class="risk-level-1">{{item.risk}}</span>
         </el-row>
             <el-divider></el-divider>
@@ -34,29 +34,21 @@ export default {
 
   data() {
     return{
-        reFresh:true,
-        menuTree:[],
         item:{
-          'address':Vue.address
+          'address':Vue.address||0
         }
     }
   },
   methods: {
-    
+     update(){
+          console.log('1'+Vue.address)
+          this.$set(this.item,'address',Vue.address)
+      }
   },
   mounted () {
-        // this.updatedata()
-
+    Vue.Address = '1111' ;
+    this.update()
   },
-  watch:{
-      menuTree(){
-          this.reFresh= false
-          this.$nextTick(()=>{
-            this.reFresh = true
-            console.log(111)
-        })
-    }
-  }
 }
 </script>
 

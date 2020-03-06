@@ -26,6 +26,7 @@ Vue.prototype.Patientfeatures = {};
 Vue.prototype.Allcount = {};
 Vue.prototype.Flag = 0;
 Vue.prototype.Address = '';
+Vue.prototype.Result = {};
 
 
 const app = new Vue({

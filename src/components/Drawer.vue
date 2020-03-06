@@ -54,9 +54,14 @@
         };
     },
     methods: {
+        update(){
+          console.log('2'+Vue.address)
+          this.$set(this.item,'address',Vue.address)
+         }
     },
     mounted () {
-      this.$forceUpdate()
+      console.log(Vue.address)
+      this.update()
     }
     }
 </script>
