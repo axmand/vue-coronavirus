@@ -507,16 +507,14 @@ export default {
         const jxpatients = result.features;
         for (var i = 0; i < jxpatients.length; i++) {
           var contains_3 = circle.containsPoint(new maptalks.Point(jxpatients[i].geometry.coordinates[0], jxpatients[i].geometry.coordinates[1]));
-          // console.log(new maptalks.Point(400,300));
-          //var contains_3 = circle.containsPoint(new maptalks.Point(400,300));
           if (contains_3) {
             patient_3.push(jxpatients[i]);
           }
         }
+        Vue.mapInstance.addLayer(patient_3Layer);
+        console.log(patient_3.length);
+        return patient_3.length;
       });
-      Vue.mapInstance.addLayer(patient_3Layer);
-      console.log(patient_3.length);
-      return patient_3.length;
     },
 
     //百度API定位：获取当前位置
@@ -577,7 +575,7 @@ export default {
     this.markInfo2();
     this.polygon(true);
     this.boundary();
-    // this.patient_3(114.330506,30.358314);
+    this.patient_3(114.319815, 30.360594);
     // this.patient_5(114.3, 30.5);
     // this.getAddress(116.017637, 37.957109);
 
