@@ -6,28 +6,16 @@
       <webmap ref="webmap"></webmap>
     </div>
     <div class="bottom" :class="{full:isFull}">
+      
       <div class="bottom-btn-top">
-        <div class="bottom-btn-title">东圆小区</div>
-        <div class="fengxian">低风险</div>
-        <div class="full-btn" @click="isFull=true" v-if="!isFull"></div>
+        <div class="fengxian">{{dangerousText}}</div>
+        <div class="full-btn" v-if="!isFull"></div>
         <div class="full-btn" @click="isFull=false" v-else style="transform:rotateZ(180deg)"></div>
       </div>
-      <div class="bottom-center">
-        <ul class="number-list">
-          <li class="number-list-item">
-            <div class="list-item-top">{{totalData.confirm}}</div>
-            <div class="list-item-bottom">累计确诊</div>
-          </li>
-          <li class="number-list-item">
-            <div class="list-item-top">{{totalData.new}}</div>
-            <div class="list-item-bottom">今日新增</div>
-          </li>
-          <li class="number-list-item">
-            <div class="list-item-top green">{{totalData.cure}}</div>
-            <div class="list-item-bottom">累计治愈</div>
-          </li>
-        </ul>
-        <div class="bottom-center-info"></div>
+
+      <div class="center">
+       <div class="definite">附近累计确诊:<span class="people">{{num}}</span><span class="monad">人</span></div>
+       <div class="alert">{{alertText}}</div>
       </div>
       <div class="bottom-footer" v-if="!isFull" @click="isFull = true">更多周边信息,点击显示...</div>
       <div class="out-list">
@@ -84,6 +72,9 @@ export default {
         confirm: 17,
         new: 0
       },
+      num:0,
+       viewArr:[
+            ],
       filterList: ["全部", "药店", "商超", "酒店"],
       currentItem: "全部",
       listData: [
@@ -129,11 +120,57 @@ export default {
           time: "营业时间8:00 - 19:00",
           location: "枣阳路"
         }
-      ]
+      ],
+      dangerous:[ '低风险','中风险','高风险',''],
+      dangerousText:'',
+      alertText:'',
     };
   },
 
-  methods: {},
+  methods: {
+     // 3公里确诊人数
+      patient_3(lon, lat) {
+        var that = this;
+        var n = 0;
+        var patient_3 =[];
+        var patient_3Layer = new maptalks.VectorLayer('patient_3');
+        Vue.mapInstance.addLayer(patient_3Layer);
+        const circle = new maptalks.Circle([lon, lat], 3000);
+        patient_3Layer.addGeometry(circle);
+        fetch("https://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
+          const jxpatients = result.features;
+          var jxmultiponits=[];
+          for (var i = 0; i < jxpatients.length; i++) {
+            jxmultiponits.push(jxpatients[i].geometry.coordinates);
+          }
+          var r=new maptalks.MultiPoint(jxmultiponits);
+          patient_3Layer.addGeometry(r);
+          var jxpoints2=patient_3Layer.getGeometries();
+          //console.log(jxpoints2[1]._geometries.length);
+          for(var j=0;j<jxpoints2[1]._geometries.length;j++){
+            var contains_3=circle.containsPoint(jxpoints2[1]._geometries[j]._coordinates);
+            if(contains_3){
+              patient_3.push(jxpatients[j].properties);
+              that.viewArr.push(jxpatients[j].properties);
+              n++
+            }
+          }  
+          that.num = n;
+          if(that.num <= 0){
+            this.dangerousText = '低风险';
+            this.alertText ='您当前附近3公里范围内疫情风险较低，也请注意防护。';
+          }else if(that.num >=1 || that.num <=9){
+            this.dangerousText = '中风险';
+            this.alertText ='您当前附近3公里范围内存在一定的风险，请注意防护，减少外出。';
+          }else if(that.num >9){
+            this.dangerousText = '高风险';
+            this.alertText ='您当前附近3公里范围内疫情风险高，请务必做好防护，做好自我隔离。';
+          }
+          console.log('3公里之内的人数',that.num);
+          Vue.mapInstance.removeLayer('patient_3') ;
+        });
+      },
+  },
 
   mounted() {
     const _this = this;
@@ -145,7 +182,8 @@ export default {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
           var lng = r.point.lng;
           var lat = r.point.lat;
-          console.log(r);
+          console.log('地理信息',r);
+          _this.patient_3(lng,lat);
           //获取地址信息
           gc.getLocation(r.point, function(rs) {
             var addComp = rs.addressComponents;
@@ -179,6 +217,7 @@ export default {
         }
       });
     });
+    
   }
 };
 </script>
@@ -418,5 +457,40 @@ body {
   line-height: 41px;
   float: left;
   margin-left: 27px;
+}
+.center{
+  height:178px;
+}
+.center .definite{
+  height:60px;
+  margin-top:16px;
+  font-size:30px;
+  font-weight:900;
+  margin-left:44px;
+  color:#393a35;
+  letter-spacing:2px;
+}
+.people{
+  height:60px;
+  font-size:30px;
+  color:#e75f5c;
+  margin-left:5px;
+}
+.alert{
+  width:540px;
+  border:2px solid #112daf;
+  border-radius:5px;
+  margin-left:44px;
+  color:#3a3b36;
+  text-align:center;
+  line-height:48px;
+  font-size:20px;
+  letter-spacing:5px;
+  padding-left:4px;
+  font-weight:bold;
+  margin-top:5px;
+}
+.monad{
+  font-size:16px;
 }
 </style>
