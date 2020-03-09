@@ -88,7 +88,7 @@
         Vue.mapInstance.addLayer(patient_3Layer);
         const circle = new maptalks.Circle([lon, lat], 3000);
         patient_3Layer.addGeometry(circle);
-        fetch("https://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
+        fetch("https://ncp.gsafety.com/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
           const jxpatients = result.features;
           var jxmultiponits=[];
           for (var i = 0; i < jxpatients.length; i++) {

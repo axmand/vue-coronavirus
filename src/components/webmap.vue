@@ -47,7 +47,7 @@ export default {
           Vue.mapInstance.getLayer('cluster').show()
         }
         else {
-          fetch("https://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+          fetch("https://ncp.gsafety.com/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
             let markers = []
             var features = result.features;
             for (var i = 0; i < features.length; i++) {
@@ -111,7 +111,7 @@ export default {
     },
     //江夏聚点图
     markInfo2() {
-      fetch("https://120.77.76.166/coronavius/assets/points.json").then(result => result.json()).then(result => {
+      fetch("https://ncp.gsafety.com/coronavius/assets/points.json").then(result => result.json()).then(result => {
         let markers = []
         const testpoints = result.points;
         for (var i = 0; i < testpoints.length; i++) {
@@ -170,7 +170,7 @@ export default {
         if (Vue.mapInstance.getLayer('heat') != null) {
           Vue.mapInstance.getLayer('heat').show()
         } else {
-          fetch("https://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+          fetch("https://ncp.gsafety.com/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
             let patient = []
             var features = result.features;
             for (var i = 0; i < features.length; i++) {
@@ -205,7 +205,7 @@ export default {
           Vue.mapInstance.getLayer('v').show()
         }
         else {
-          fetch("https://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
+          fetch("https://ncp.gsafety.com/coronavius/assets/county.json").then(result => result.json()).then(county => {
             Vue.mapInstance.addLayer(new maptalks.VectorLayer('v'))
             const geometries = maptalks.GeoJSON.toGeometry(county);
             const vectorLayer = Vue.mapInstance.getLayer('v').addGeometry(geometries);
@@ -262,7 +262,7 @@ export default {
             // Vue.mapInstance.getLayer('patient').getGeometryById(8).openInfoWindow();
           }
         } else {
-          fetch("https://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+          fetch("https://ncp.gsafety.com/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
             Vue.Patientfeatures = result.features;
             //var layer=Vue.mapInstance.getLayer('v');
             var patientLayer = new maptalks.VectorLayer('patient');
@@ -359,7 +359,7 @@ export default {
             //Vue.mapInstance.getLayer('heal').getGeometryById(4).openInfoWindow();
           }
         } else {
-          fetch("https://120.77.76.166/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
+          fetch("https://ncp.gsafety.com/coronavius/assets/hbqx.json").then(result => result.json()).then(result => {
             Vue.features = result.features;
             var healLayer = new maptalks.VectorLayer('heal');
             for (var i = 0; i < Vue.features.length; i++) {
@@ -436,7 +436,7 @@ export default {
         Vue.mapInstance.getLayer('boundary').show()
       }
       else {
-        fetch("https://120.77.76.166/coronavius/assets/county.json").then(result => result.json()).then(county => {
+        fetch("https://ncp.gsafety.com/coronavius/assets/county.json").then(result => result.json()).then(county => {
           Vue.mapInstance.addLayer(new maptalks.VectorLayer('boundary'))
           const geometries = maptalks.GeoJSON.toGeometry(county);
           const vectorLayer = Vue.mapInstance.getLayer('boundary').addGeometry(geometries);
@@ -484,7 +484,7 @@ export default {
       Vue.mapInstance.addLayer(patient_3Layer);
       const circle = new maptalks.Circle([lon, lat], 3000);
       patient_3Layer.addGeometry(circle);
-      fetch("https://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
+      fetch("https://ncp.gsafety.com/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
         const jxpatients = result.features;
         var jxmultiponits=[];
         for (var i = 0; i < jxpatients.length; i++) {

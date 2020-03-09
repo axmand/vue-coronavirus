@@ -8,16 +8,18 @@
     <div class="bottom" :class="{full:isFull}">
       
       <div class="bottom-btn-top">
-        <div class="fengxian">{{dangerousText}}</div>
-        <div class="full-btn" v-if="!isFull"></div>
-        <div class="full-btn" @click="isFull=false" v-else style="transform:rotateZ(180deg)"></div>
+        <div class="fengxian" v-if="num <= 2">低风险</div>
+        <div class="fengxian" style="background:#ffc107;" v-else-if="num <= 5">中风险</div>
+        <div class="fengxian" style="background:#ff5722;" v-else>高风险</div>
       </div>
 
       <div class="center">
        <div class="definite">附近累计确诊:<span class="people">{{num}}</span><span class="monad">人</span></div>
-       <div class="alert">{{alertText}}</div>
+       <div class="alert" v-if="num <= 2">您当前附近3公里范围内疫情风险较低，也请注意防护。</div>
+       <div class="alert" v-else-if="num <= 5">您当前附近3公里范围内存在一定的风险，请注意防护，减少外出。</div>
+       <div class="alert" v-else>您当前附近3公里范围内疫情风险高，请务必做好防护，做好自我隔离。</div>
       </div>
-      <div class="bottom-footer" v-if="!isFull" @click="isFull = true">更多周边信息,点击显示...</div>
+      <div class="bottom-footer"></div>
       <div class="out-list">
         <ul class="filter-list">
           <li
@@ -137,7 +139,7 @@ export default {
         Vue.mapInstance.addLayer(patient_3Layer);
         const circle = new maptalks.Circle([lon, lat], 3000);
         patient_3Layer.addGeometry(circle);
-        fetch("https://120.77.76.166/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
+        fetch("https://ncp.gsafety.com/coronavius/assets/jxpoints.json").then(result => result.json()).then(result => {
           const jxpatients = result.features;
           var jxmultiponits=[];
           for (var i = 0; i < jxpatients.length; i++) {
@@ -156,17 +158,6 @@ export default {
             }
           }  
           that.num = n;
-          if(that.num <= 0){
-            this.dangerousText = '低风险';
-            this.alertText ='您当前附近3公里范围内疫情风险较低，也请注意防护。';
-          }else if(that.num >=1 || that.num <=9){
-            this.dangerousText = '中风险';
-            this.alertText ='您当前附近3公里范围内存在一定的风险，请注意防护，减少外出。';
-          }else if(that.num >9){
-            this.dangerousText = '高风险';
-            this.alertText ='您当前附近3公里范围内疫情风险高，请务必做好防护，做好自我隔离。';
-          }
-          console.log('3公里之内的人数',that.num);
           Vue.mapInstance.removeLayer('patient_3') ;
         });
       },
