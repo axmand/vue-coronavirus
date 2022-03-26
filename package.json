@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/axmand/vue-coronavirus#readme",
   "dependencies": {
-    "minimist": ">=1.2.2",
+    "minimist": ">=1.2.6",
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
     "echarts": "^4.6.0",
